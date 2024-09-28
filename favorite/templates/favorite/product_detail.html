@@ -1,0 +1,46 @@
+{% extends "shop/base.html" %}
+{% load static %}
+
+{% block title %}
+  {{ product.name }}
+{% endblock %}
+{% block content %}
+  <div class="product-detail">
+    <img src="{% if product.image %}{{ product.image.url }}{% else %}
+    {% static "img/no_image.png" %}{% endif %}">
+    <h1>{{ product.name }}</h1>
+    <h2>
+      <a href="{{ product.category.get_absolute_url }}">
+        {{ product.category }}
+      </a>
+    </h2>
+    <p class="price">${{ product.price }}</p>
+    
+    <!-- Contenedor para ambos botones -->
+    <div class="button-group" style="display: flex; gap: 10px;">
+      <!-- Botón de Añadir al carrito -->
+      <form action="{% url "cart:cart_add" product.id %}" method="post">
+        {{ cart_product_form }}
+        {% csrf_token %}
+        <input type="submit" value="Add to cart">
+      </form>
+
+      <!-- Botón de Añadir a favoritos -->
+      {% if user.is_authenticated %}
+        {% if is_favorite %}
+          <form action="{% url 'favorite:remove_from_favorites' product.id %}" method="post">
+            {% csrf_token %}
+            <input type="submit" value="Remove from Favorites">
+          </form>
+        {% else %}
+          <form action="{% url 'favorite:add_to_favorites' product.id %}" method="post">
+            {% csrf_token %}
+            <input type="submit" value="Add to Favorites">
+          </form>
+        {% endif %}
+      {% endif %}
+    </div>
+
+    {{ product.description|linebreaks }}
+  </div>
+{% endblock %}

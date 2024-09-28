@@ -1,0 +1,48 @@
+{% extends "shop/base.html" %}
+{% load static %}
+
+{% block title %}
+  {{ product.name }}
+{% endblock %}
+{% block content %}
+  <!-------------------------------------------------------------------------------------------------------------------->
+<div>
+  <button class="btn d-flex pm-0" onclick="history.back()">
+    <img src="{% static 'img/iconos/atras.png' %}" alt="Volver" style="width: 40px; height: 40px; border: none;">
+    
+  </button>
+</div>
+  <div class="container mt-5">
+  <div class="row" style="color: #4E50B4;">
+    <div class="col">
+      <h2 style="color: #4E50B4;"><strong>{{ product.name }}</strong></h2>
+      <p class="price">Precio:  ${{ product.price }}</p>
+      <p>{{ product.description|linebreaks }}</p>
+
+      <form action="{% url "cart:cart_add" product.id %}" method="post">
+        {{ cart_product_form }}
+        {% csrf_token %}
+        <input type="submit" value="Agregar al carrito" class="mt-5" style="background-color: #4E50B4;">
+      </form>
+      {% if user.is_authenticated %}
+      
+      {% if is_favorite %}
+        <form action="{% url 'favorite:remove_from_favorites' product.id %}" method="post">
+          {% csrf_token %}
+          <input type="submit" value="Remove from Favorites">
+        </form>
+      {% else %}
+        <form action="{% url 'favorite:add_to_favorites' product.id %}" method="post">
+          {% csrf_token %}
+          <input type="submit" value="Add to Favorites" class="mt-5" style="background-color: #4E50B4;">
+        </form>
+      {% endif %}
+    {% endif %}
+    </div>
+    <div class="col">
+      <img src="{% if product.image %}{{ product.image.url }}{% else %}
+      {% static "img/no_image.png" %}{% endif %}">
+    </div>
+  </div>
+</div>
+{% endblock %}
