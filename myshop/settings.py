@@ -23,6 +23,7 @@ INSTALLED_APPS = [
     'jazzmin',
     'favorite',
     'accounts',
+    'reports',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -72,9 +73,9 @@ WSGI_APPLICATION = 'myshop.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'myshop',
+        'NAME': 'myshop2',
         'USER': 'root',
-        'PASSWORD': 'root',
+        'PASSWORD': 'rootyeison',
         'HOST': 'localhost',
         'PORT': '3306',
     }

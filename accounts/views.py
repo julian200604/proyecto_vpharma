@@ -13,7 +13,11 @@ def register(request):
             if user.is_superuser:
                 return redirect('login')
             else:
-                rol = Rol.objects.get(nombre='cliente')
+                try:
+                    rol = Rol.objects.get(nombre='cliente')
+                except Rol.DoesNotExist:
+                    rol = Rol(nombre='cliente')
+                    rol.save()
                 usuario = Usuario(user=user, rol=rol)
                 usuario.save()
                 return redirect('login')
