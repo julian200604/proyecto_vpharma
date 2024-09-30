@@ -1,80 +1,81 @@
-{% extends "shop/base.html" %}
+{% extends "shop/base_nav.html" %}
 {% load static %}
 
 {% block title %}
-  Your shopping cart
+  carro de compra
 {% endblock %}
 
 {% block content %}
-<div>
-  <button class="btn d-flex pm-0" onclick="history.back()">
-      <svg xmlns="http://www.w3.org/2000/svg" width="40" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16" style="color: #4E50B4;">
-          <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"/>
-        </svg>        
-    </button>
-</div>
+<link href="{% static 'css/base.css' %}" rel="stylesheet">
+
 <div class="container">
   <div class="row">
-    <!-- Column for cart items -->
-    <div class="col-10">
-      <div class="row">
-        {% for item in cart %}
-          {% with product=item.product %}
-            <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
-              <div class="card product-card card h-100">
-                <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="card-img-top" alt="img_producto">
-                <div class="card-body">
-                  <p style="color: #4e50b4;"><strong>{{ product.name }}</strong></p>
-                  <div>
+    <div class="col">
+      {% for item in cart %}
+        {% with product=item.product %}
+          <div class="card mb-3 mt-3" style="width: 500px;">
+            <div class="card-header fw-bold text-center" style="background-color: #34DD78; color: #4E50B4;">
+              <p style="color: #4e50b4;"><strong>{{ product.name }}</strong></p>
+            </div>
+            <div class=" d-flex justify-content-center">
+              <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="card-img-top" alt="img_producto" style="max-width: 190px; max-height: 190px; margin-top: 15px;">
+            </div>
+
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <div style="color: #4e50b4">
+                    <p class="fw-bold">Precio por unidad: </p><p>${{ item.price }}</p>
+                    <p class="fw-bold">Precio Total: </p><p>${{ item.total_price }}</p>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="d-flex">
                     <form action="{% url 'cart:cart_add' product.id %}" method="post">
-                      {{ item.update_quantity_form.quantity }}
-                      {{ item.update_quantity_form.override }}
-                      <input type="submit" value="Actualizar" class="btn btn-primary" style="background-color: #4e50b4;">
-                      {% csrf_token %}
+                    {% if not is_cart_detail %} <!-- Linea agregada-->
+                      {{ item.update_quantity_form }}
+                      <input type="submit" value="Actualizar" class="btn btn-primary me-3" style="background-color: #4e50b4;">
+                    {% endif %} <!-- Linea agregada-->
+                    {% csrf_token %}
                     </form>
-                  </div>
-                  <div style="color: #4e50b4;">
-                    <p>Precio por unidad: ${{ item.price }}</p>
-                    <p>Precio Total: ${{ item.total_price }}</p>
-                  </div>
-                  <div>
                     <form action="{% url 'cart:cart_remove' product.id %}" method="post">
-                      <input type="submit" value="Eliminar" class="btn btn-danger" style="background-color: red;">
+                      <input type="submit" value="Eliminar" class="btn fw-bold" style="background-color: #34DD78; color: #4E50B4;">
                       {% csrf_token %}
                     </form>
                   </div>
                 </div>
               </div>
             </div>
-          {% endwith %}
-        {% endfor %}
-      </div>
+          </div>
+        {% endwith %}
+      {% endfor %}
     </div>
-    
 
-    <div class="col-2 mt-5">
-      <div class="card" style="width: 18rem;">
-        <div class="d-flex justify-content-center" style="color: #4E50B4; background-color: #34dd78;">
+    <div class="col">
+      <div class="card mt-3 float-end" style="width: 300px;">
+        <div class="card-header text-center fw-bold" style="background-color: #34DD78; color: #4E50B4;">
           Generar compra
         </div>
-        <div class="p-3" style="background-color: #e7f1f6; color: #4E50B4;">
-          <p>Sub_Total</p>
+        <div class="card-body text-center">
+          <p style="color: #4E50B4;" class="fw-bold">Sub-Total</p>
           <p style="background-color: #d9d9d9;">$ {{ cart.get_total_price }}</p>
-          <p>Descuento:</p>
+          <p style="color: #4E50B4;" class="fw-bold">Descuento:</p>
           <p style="background-color: #d9d9d9;">$</p>
-          <p>Costos del envío:</p>
+          <p style="color: #4E50B4;" class="fw-bold">Costos del envío:</p>
           <p style="background-color: #d9d9d9;">$</p>
-          <p>Precio total:</p>
+          <p style="color: #4E50B4;" class="fw-bold">Precio total:</p>
           <p style="background-color: #d9d9d9;">$ {{ cart.get_total_price }}</p>
-          <a href="{% url 'orders:order_create' %}" class="btn" style="background-color: #4E50B4; color: white;">Pedir</a>
-          <a href="{% url 'shop:product_list' %}" class="btn light">Seguir Comprando</a>
+          <button class="btn rounded-pill mb-3" style="background-color: #34DD78;">
+            <a href="{% url 'orders:order_create' %}" class="fw-bold" style="color: #4E50B4">Finalizar compra</a>
+          </button>
+          <button class="btn rounded-pill" style="background-color: #34DD78;">
+            <a href="{% url 'shop:product_list' %}" class="fw-bold" style="color: #4E50B4">Seguir comprando</a>
+          </button>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-
-
-
+  
 {% endblock %}

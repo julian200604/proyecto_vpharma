@@ -35,5 +35,6 @@ def cart_detail(request):
         )
     # Añadimos la variable para verificar si el carrito está vacío
     carrito_vacio = len(cart) == 0
+    is_cart_detail = True
 
-    return render(request, 'cart/detail.html', {'cart': cart, 'carrito_vacio': carrito_vacio})
+    return render(request, 'cart/detail.html', {'cart': cart, 'carrito_vacio': carrito_vacio, 'is_cart_detail': is_cart_detail}) # se modifico
