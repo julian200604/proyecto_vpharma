@@ -1,16 +1,58 @@
-{% extends 'shop/base.html' %}
+{% extends 'base_accounts.html' %}
+{% load widget_tweaks %}
+{% load static %}
 
 {% block content %}
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-md-4">
-        <h2>Registro</h2>
-        <form method="post">
-          {% csrf_token %}
-          {{ form.as_p }}
-          <button type="submit" class="btn btn-primary">Registrarse</button>
-        </form>
-      </div>
+<div class="container mt-5">
+  <div class="card mb-5" style="width: 900px; margin: auto; margin-top: 20px;">
+    <div class="card-body mx-auto">
+        <div class="text-center mb-4">
+          <img src="{% static 'img/logo_v_pharma.png' %}" alt="logo" width="150px" class="me-1">
+        </div>
+        <h2 class="fw-bold text-center" style="color: #4E50B4;">Registro</h2>
+        <div class="card mt-4" style="width: 500px;">
+            <div class="card-body text-center">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="form-group m-3">
+                      {{ form.username|add_class:"form-control" }}  <!-- Campo de nombre de usuario -->
+                      {{ form.username.errors }}
+                    </div>
+                    <div class="form-group m-3">
+                        {{ form.nombre_completo|add_class:"form-control" }}
+                        {{ form.nombre_completo.errors }}
+                    </div>
+                    <div class="form-group m-3">
+                        {{ form.telefono|add_class:"form-control" }}
+                        {{ form.telefono.errors }}
+                    </div>
+                    <div class="form-group m-3">
+                        {{ form.fecha_nacimiento|add_class:"form-control" }}
+                        {{ form.fecha_nacimiento.errors }}
+                    </div>
+                    <div class="form-group m-3">
+                        {{ form.direccion|add_class:"form-control" }}
+                        {{ form.direccion.errors }}
+                    </div>
+                    <div class="form-group m-3">
+                        {{ form.password1|add_class:"form-control" }}
+                        {{ form.password1.errors }}
+                    </div>
+                    <div class="form-group m-3">
+                        {{ form.password2|add_class:"form-control" }}
+                        {{ form.password2.errors }}
+                    </div>
+                    <button type="submit" class="btn rounded-pill mb-3 fw-bold" style="background-color: #4E50B4; color: #ffff">Registrar</button>
+                </form>
+            </div>
+        </div>
     </div>
-  </div>
+</div>
+</div>
+
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+    {% endfor %}
+{% endif %}
 {% endblock %}

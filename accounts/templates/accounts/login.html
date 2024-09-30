@@ -1,17 +1,37 @@
-{% extends 'shop/base.html' %}
+{% extends 'base_accounts.html' %}
+{% load widget_tweaks %}
+{% load static %}
 
 {% block content %}
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-md-4">
-        <h2>Iniciar sesión</h2>
-        <form method="post">
-          {% csrf_token %}
-          {{ form.as_p }}
-          <input type="hidden" name="next" value="{{ request.GET.next }}">
-          <button type="submit" class="btn btn-primary">Iniciar sesión</button>
-        </form>
-      </div>
+<div class="container mt-5">
+    <div class="card mb-5" style="width: 900px; margin: auto; margin-top: 20px;">
+        <div class="card-body mx-auto">
+            <div class="text-center mb-4">
+                <img src="{% static 'img/logo_v_pharma.png' %}" alt="logo" width="150px" class="me-1">
+            </div>
+            <h2 class="fw-bold text-center" style="color: #4E50B4;">Iniciar sesión</h2>
+            <div class="card mt-4" style="width: 500px;">
+                <div class="card-body text-center">
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="form-group mb-4 text-center ">
+                            <p style="color: #4E50B4;">Ingrese su nombre de usuario</p>
+                            {{ form.username|add_class:"form-control" }} <!-- Asegúrate de que tenga la clase form-control -->
+                            {{ form.username.errors }} 
+                        </div>
+                        <div class="form-group mb-4 text-center">
+                            <p style="color: #4E50B4;">Ingrese su contraseña</p>
+                            {{ form.password|add_class:"form-control" }} <!-- Asegúrate de que tenga la clase form-control -->
+                            {{ form.password.errors }}
+                        </div>
+                        <button type="submit" class="btn rounded-pill mb-3 fw-bold" style="background-color: #4E50B4; color: #ffff">Iniciar sesión</button>
+                    </form>
+                    <div class="mt-3 text-center">
+                        <p style="color: #4E50B4;">No tienes cuenta <a href="{% url 'register' %}" style="color: #34DD78;">Regístrate aquí</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
+</div>
 {% endblock %}

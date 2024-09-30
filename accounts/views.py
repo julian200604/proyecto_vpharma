@@ -4,27 +4,30 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib import messages
 from .models import Usuario, Rol
 from django.urls import reverse
+from .forms import RegistroForm
 
 def register(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = RegistroForm(request.POST)
         if form.is_valid():
+            # Guarda el usuario
             user = form.save()
-            if user.is_superuser:
-                return redirect('login')
-            else:
-                try:
-                    rol = Rol.objects.get(nombre='cliente')
-                except Rol.DoesNotExist:
-                    rol = Rol(nombre='cliente')
-                    rol.save()
-                usuario = Usuario(user=user, rol=rol)
-                usuario.save()
-                return redirect('login')
+            # Obtiene o crea el rol
+            rol, created = Rol.objects.get_or_create(nombre='cliente')
+            # Crea el objeto Usuario relacionado
+            Usuario.objects.create(user=user, rol=rol)
+
+            # Mensaje de éxito
+            messages.success(request, 'Registro exitoso. Ahora puedes iniciar sesión.')
+            return redirect('login')
         else:
-            messages.error(request, 'Error al crear el usuario')
+            # Mensaje de error con detalles de los errores del formulario
+            for field in form:
+                for error in field.errors:
+                    messages.error(request, f"{field.label}: {error}")
+            messages.error(request, 'Error al registrar el usuario. Revisa los datos ingresados.')
     else:
-        form = UserCreationForm()
+        form = RegistroForm()
     return render(request, 'accounts/register.html', {'form': form})
 
 def login_view(request):

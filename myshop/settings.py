@@ -14,7 +14,7 @@ SECRET_KEY = 'django-insecure-k6!#q&!j%-om)i^-0p!%-#2k3_kjtg*@p#lx3@xu@&0i474+x5
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['18.234.251.16', 'localhost']
+ALLOWED_HOSTS = []
 #'18.234.251.16', 'localhost'
 
 
@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'cart.apps.CartConfig',
     'orders.apps.OrdersConfig',
     'shop.apps.ShopConfig',
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [
@@ -75,9 +76,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'myshop_db',
-        'USER': 'admin',
-        'PASSWORD': 'julian2006-04',
-        'HOST': 'database-1.c1sc2k4a0g3o.us-east-1.rds.amazonaws.com',
+        'USER': 'root',
+        'PASSWORD': 'root',
+        'HOST': 'localhost',
         'PORT': '3306',
     }
 }
