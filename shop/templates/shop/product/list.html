@@ -20,6 +20,9 @@
 </nav>
 <!-- Categorias -->
 
+<!-- Contenedor para mensajes -->
+<div id="message" class="alert alert-success" style="display: none;"></div>
+
 <h2 class="text-center fw-bold" style="color: #4E50B4;">
   {% if category %}{{ category.name }}{% else %} Productos destacados {% endif %}
 </h2>
@@ -150,6 +153,29 @@
 
 </footer>
 <!-- Footer -->
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.add-to-cart-form').on('submit', function(e) {
+            e.preventDefault(); // Evitar el envío normal del formulario
+
+            $.ajax({
+                type: 'POST',
+                url: $(this).attr('action'),
+                data: $(this).serialize(),
+                success: function(response) {
+                    // Mostrar un mensaje de éxito al usuario
+                    $('#message').text('Su producto se ha añadido al carrito correctamente.').show().fadeOut(3000);
+                },
+                error: function(xhr, errmsg, err) {
+                    // Mostrar un mensaje de error al usuario
+                    $('#message').text('Error al añadir al carrito').show().fadeOut(3000);
+                }
+            });
+        });
+    });
+</script>
 
 
 

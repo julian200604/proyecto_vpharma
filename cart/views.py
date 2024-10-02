@@ -1,4 +1,5 @@
 from django.shortcuts import get_object_or_404, redirect, render
+from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 from shop.models import Product
 from .cart import Cart
@@ -10,7 +11,7 @@ def cart_add(request, product_id):
     product = get_object_or_404(Product, id=product_id)
     quantity = int(request.POST.get('quantity', 1))  # Lee la cantidad del formulario
     cart.add(product=product, quantity=quantity)  # Añade el producto con la cantidad especificada
-    return redirect('cart:cart_detail')
+    return JsonResponse({'success': True, 'message': 'Producto añadido al carrito'})
 
 @require_POST
 def cart_remove(request, product_id):
