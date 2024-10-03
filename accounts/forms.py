@@ -45,3 +45,20 @@ class RegistroForm(UserCreationForm):
     def __init__(self, *args, **kwargs):
         super(RegistroForm, self).__init__(*args, **kwargs)
         self.fields['nombre_completo'].widget.attrs.update({'class': 'mi-clase'})
+
+class EditarPerfilForm(forms.ModelForm):
+    username = forms.CharField(max_length=150)
+
+    class Meta:
+        model = Perfil
+        fields = ('nombre_completo', 'telefono', 'fecha_nacimiento', 'direccion')
+
+    def __init__(self, *args, **kwargs):
+        super(EditarPerfilForm, self).__init__(*args, **kwargs)
+        self.fields['username'].initial = self.instance.user.username
+
+    def save(self, commit=True):
+        user = self.instance.user
+        user.username = self.cleaned_data['username']
+        user.save()
+        return super(EditarPerfilForm, self).save(commit)

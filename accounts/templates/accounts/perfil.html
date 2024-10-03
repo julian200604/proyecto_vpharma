@@ -1,12 +1,93 @@
-{% extends 'shop/base_nav.html' %}
+{% extends 'base_accounts_profile.html' %}
 {% load static %}
+{% load widget_tweaks %}
 
 {% block content %}
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: 'Poppins', sans-serif;
+  }
+  .form-control {
+    color: #ccc;
+    font-weight: 600;
+  }
+</style>
+
 <div class="container">
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-primary">Guardar cambios</button>
-  </form>
+  <div class="row justify-content-center mt-5 mb-5">
+
+    <div class="col">
+      <div class="card" style="width: 18rem;">
+        <div class="card-body rounded" style="background-color: #9394D5;">
+          <div class="d-flex align-items-center mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" width="60" fill="aliceblue" class="bi bi-person-fill"
+              viewBox="0 0 16 16">
+              <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
+            </svg>
+            <p style="color: aliceblue; margin-top: 50px;">Hola, {{ user.username }}!</p>
+          </div>
+          <a href="#" class="card-link fw-semibold" style="color: aliceblue;">Historial de compra</a>
+          <div class="d-flex align-items-center mt-5">
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" fill="aliceblue" class="bi bi-box-arrow-in-right"
+              viewBox="0 0 16 16">
+              <path fill-rule="evenodd"
+                d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0z" />
+              <path fill-rule="evenodd"
+                d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z" />
+            </svg>
+            <a href="{% url 'logout' %}" style="color: aliceblue; text-decoration: none;" class="ms-1">Cerrar sesión</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="card" style="width: 50rem; border: none;">
+        <div class="card-body rounded" style="background-color: #E7F1F6;">
+          <h5 class="card-title fw-bold mb-4" style="color: #4E50B4;">Mi perfil</h5>
+          <form method="post">
+            {% csrf_token %}
+            <div class="form-group mb-3">
+                <label for="username" class="fw-semibold" style="color: #4E50B4;">Nombre de Usuario</label>
+                <input type="text" class="form-control" id="username" name="username" value="{{ form.username.value }}" placeholder="Ingrese su username">
+            </div>
+            <div class="form-group mb-3">
+                <label for="nombre_completo" class="fw-semibold" style="color: #4E50B4;">Nombre Completo</label>
+                <input type="text" class="form-control" id="nombre_completo" name="nombre_completo" value="{{ form.nombre_completo.value }}" placeholder="Ingrese su nombre completo">
+            </div>
+            <div class="form-group mb-3">
+                <label for="telefono" class="fw-semibold"style="color: #4E50B4;">Teléfono</label>
+                <input type="text" class="form-control" id="telefono" name="telefono" value="{{ form.telefono.value }}" placeholder="Ingrese su teléfono">
+            </div>
+            <div class="form-group mb-3">
+                <label for="fecha_nacimiento" class="fw-semibold" style="color: #4E50B4;">Fecha de Nacimiento</label>
+                <input type="date" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento" value="{{ form.fecha_nacimiento.value }}" placeholder="Ingrese su fecha de nacimiento">
+            </div>
+            <div class="form-group mb-3">
+                <label for="direccion" class="fw-semibold" style="color: #4E50B4;">Dirección</label>
+                <input type="text" class="form-control" id="direccion" name="direccion" value="{{ form.direccion.value }}" placeholder="Ingrese su dirección">
+            </div>
+            <div class="text-center">
+              <button type="submit" class="btn rounded" style="color: #E7F1F6; background-color: #4E50B4;">Guardar Cambios</button>
+            </div>
+        </form>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 {% endblock %}

@@ -1,4 +1,5 @@
 {% load static %}
+{% load widget_tweaks %}
 <!DOCTYPE html>
 <html>
 
@@ -96,6 +97,68 @@
    {% block content %}
    {% endblock %}
  </div>
+
+ <!-- Footer-->
+<footer class="row">
+
+  <div class="col p-3 ps-4" style="background-color: #a9a9dd;">
+    <div class="card" style="width: 18rem; background-color: #e7f1f6;">
+      <div class="card-body fw-bold text-start">
+        <p class="card-text">
+          <a href="#" style="color: #4e50b4; text-decoration: none;">
+            <img src="{% static 'img/footer/ayuda.png' %}" alt="icon_help" width="20px"> Ayuda
+          </a>
+        </p>
+        <p>
+          <a href="#" style="color: #4e50b4; text-decoration: none;">
+            <img src="{% static 'img/footer/quienes _somos.png' %}" alt="icon_quien_somos" width="20px"> Quienes somos
+          </a>
+        </p>
+        <p>
+          <a href="#" style="color: #4e50b4; text-decoration: none;">
+            <img src="{% static 'img/footer/politicas_privacidad.png' %}" alt="icon_PdP" width="20px"> Políticas de Privacidad
+          </a>
+        </p>
+        <p>
+          <a href="#" style="color: #4e50b4; text-decoration: none;">
+            <img src="{% static 'img/footer/terminos-y-condiciones.png' %}" alt="icon_TyC" width="20px"> Términos y Condiciones
+          </a>
+        </p>
+        <p>
+          <a href="{% url 'shop:blog' %}" style="color: #4e50b4; text-decoration: none;">
+            <img src="{% static 'img/footer/blog.png' %}" alt="icon_blog" width="20px"> Blog
+          </a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="col p-3" style="background-color: #a9a9dd;">
+    <h5 style="color: white;" class="fw-bold mb-4">Contactos</h5>
+    <div class="d-flex flex-column">
+      <a style="color: white; text-decoration: none;" class=" mb-3">
+        <img src="{% static 'img/footer/whatsapp.png' %}" alt="logo_Whatsapp" width="30px">3126647917
+      </a>
+      <a href="" style="color: white; text-decoration: none;" class="">
+        <img src="{% static 'img/footer/gmail.png' %}" alt="" width="30px"> v-pharma@gmail.com
+      </a>
+    </div>
+  </div>
+
+  <div class="col p-3" style="background-color: #a9a9dd;">
+    <h5 style="color: white;" class="fw-bold mb-4">Síguenos</h5>
+    <div class="d-flex flex-column">
+      <a href="" style="color: white; text-decoration: none;" class="mb-3">
+        <img src="{% static 'img/footer/instagram.png' %}" alt="logo_ig" width="30px"> V-Pharma Oficial
+      </a>
+      <a href="" style="color: white; text-decoration: none;" class="">
+        <img src="{% static 'img/footer/facebook.png' %}" alt="logo_facebook" width="30px"> V-Pharma
+      </a>
+    </div>
+  </div>
+
+</footer>
+<!-- Footer -->
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
