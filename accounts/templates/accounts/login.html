@@ -24,6 +24,9 @@
                             {{ form.password|add_class:"form-control" }} <!-- Asegúrate de que tenga la clase form-control -->
                             {{ form.password.errors }}
                         </div>
+                        <div class="mt-3 text-center">
+                            <p style="color: #4E50B4;">¿Olvidaste la contraseña? <a href="{% url 'password_reset' %}" style="color: #34DD78;">Restablecer contraseña</a></p>
+                        </div>
                         <button type="submit" class="btn rounded-pill mb-3 fw-bold" style="background-color: #4E50B4; color: #ffff">Iniciar sesión</button>
                     </form>
                     <div class="mt-3 text-center">

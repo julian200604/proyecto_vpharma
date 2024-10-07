@@ -17,6 +17,7 @@ class Usuario(models.Model):
     
 class Perfil(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    email = models.EmailField(max_length=254, unique=True, null=True)
     nombre_completo = models.CharField(max_length=255)
     telefono = models.CharField(max_length=15)
     fecha_nacimiento = models.DateField(null=True, blank=True)

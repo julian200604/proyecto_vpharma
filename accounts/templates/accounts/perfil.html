@@ -66,6 +66,10 @@
                 <input type="text" class="form-control" id="username" name="username" value="{{ form.username.value }}" placeholder="Ingrese su username">
             </div>
             <div class="form-group mb-3">
+              <label for="username" class="fw-semibold" style="color: #4E50B4;">Nombre de Usuario</label>
+              <input type="text" class="form-control" id="email" name="email" value="{{ form.email.value }}" placeholder="Ingrese su email">
+            </div>
+            <div class="form-group mb-3">
                 <label for="nombre_completo" class="fw-semibold" style="color: #4E50B4;">Nombre Completo</label>
                 <input type="text" class="form-control" id="nombre_completo" name="nombre_completo" value="{{ form.nombre_completo.value }}" placeholder="Ingrese su nombre completo">
             </div>
@@ -75,7 +79,7 @@
             </div>
             <div class="form-group mb-3">
                 <label for="fecha_nacimiento" class="fw-semibold" style="color: #4E50B4;">Fecha de Nacimiento</label>
-                <input type="date" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento" value="{{ form.fecha_nacimiento.value }}" placeholder="Ingrese su fecha de nacimiento">
+                <input type="date" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento" value="{{ perfil.fecha_nacimiento }}" placeholder="Ingrese su fecha de nacimiento">
             </div>
             <div class="form-group mb-3">
                 <label for="direccion" class="fw-semibold" style="color: #4E50B4;">Dirección</label>

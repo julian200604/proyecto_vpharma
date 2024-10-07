@@ -15,8 +15,12 @@
                 <form method="post">
                     {% csrf_token %}
                     <div class="form-group m-3">
-                      {{ form.username|add_class:"form-control" }}  <!-- Campo de nombre de usuario -->
+                      {{ form.username|add_class:"form-control" }} 
                       {{ form.username.errors }}
+                    </div>
+                    <div class="form-group m-3">
+                        {{ form.email|add_class:"form-control" }}
+                        {{ form.email.errors }}
                     </div>
                     <div class="form-group m-3">
                         {{ form.nombre_completo|add_class:"form-control" }}

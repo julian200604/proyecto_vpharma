@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, SetPasswordForm as DjangoSetPasswordForm
 from .models import Perfil
 
 class AuthenticationForm(forms.Form):
@@ -16,6 +16,7 @@ class AuthenticationForm(forms.Form):
 
 class RegistroForm(UserCreationForm):
     username = forms.CharField(max_length=150, required=True, widget=forms.TextInput(attrs={'placeholder': 'Nombre de usuario'}))
+    email = forms.EmailField(required=True, widget=forms.EmailInput(attrs={'placeholder': 'Correo electrónico', 'class': 'form-control'}))
     nombre_completo = forms.CharField(max_length=255, widget=forms.TextInput(attrs={'placeholder': 'Nombre completo'}))
     telefono = forms.CharField(max_length=15, widget=forms.TextInput(attrs={'placeholder': 'Número de teléfono'}))
     fecha_nacimiento = forms.DateField(required=False, widget=forms.DateInput(attrs={'placeholder': 'YYYY-MM-DD'}))
@@ -30,6 +31,7 @@ class RegistroForm(UserCreationForm):
 
     def save(self, commit=True):
         user = super().save(commit)
+        user.email = self.cleaned_data['email']
         if commit:
             user.save()  # Guarda el usuario
             perfil = Perfil(
@@ -51,7 +53,7 @@ class EditarPerfilForm(forms.ModelForm):
 
     class Meta:
         model = Perfil
-        fields = ('nombre_completo', 'telefono', 'fecha_nacimiento', 'direccion')
+        fields = ('email', 'nombre_completo', 'telefono', 'fecha_nacimiento', 'direccion')
 
     def __init__(self, *args, **kwargs):
         super(EditarPerfilForm, self).__init__(*args, **kwargs)
@@ -60,5 +62,14 @@ class EditarPerfilForm(forms.ModelForm):
     def save(self, commit=True):
         user = self.instance.user
         user.username = self.cleaned_data['username']
-        user.save()
+        user.email = self.cleaned_data['email']  
+        if commit:
+            user.save()  
         return super(EditarPerfilForm, self).save(commit)
+    
+# Cambiar contraseña    
+class CustomSetPasswordForm(DjangoSetPasswordForm):
+    def __init__(self, user, *args, **kwargs):
+        super(CustomSetPasswordForm, self).__init__(user, *args, **kwargs)
+        self.fields['new_password1'].label = 'Nueva contraseña'
+        self.fields['new_password2'].label = 'Confirmar contraseña'
