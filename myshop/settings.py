@@ -17,6 +17,7 @@ ALLOWED_HOSTS = ['www.v-pharma.online', 'v-pharma.online','18.234.251.16', 'loca
 #'www.v-pharma.online', 'v-pharma.online','18.234.251.16', 'localhost'
 
 
+
 # Application definition
 
 INSTALLED_APPS = [
