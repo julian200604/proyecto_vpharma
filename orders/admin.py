@@ -1,14 +1,9 @@
 from django.contrib import admin
-
-# Register your models here.
-
 from .models import Order, OrderItem
-
 
 class OrderItemInline(admin.TabularInline):
     model = OrderItem
     raw_id_fields = ['product']
-
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
@@ -18,11 +13,20 @@ class OrderAdmin(admin.ModelAdmin):
         'last_name',
         'email',
         'address',
-        'postal_code',
         'city',
-        'paid',
+        'is_paid',  
         'created',
-        'updated',
+        'paid' 
     ]
-    list_filter = ['paid', 'created', 'updated']
+    list_filter = ['paid', 'created']
     inlines = [OrderItemInline]
+
+    # Método para mostrar "Sí" o "No" en la columna de "Pagado"
+    def is_paid(self, obj):
+        return "Sí pago" if obj.paid else "No ha pagado"
+
+    is_paid.short_description = 'Estado de pago'  
+    is_paid.admin_order_field = 'paid'  
+    
+    # Hacer el campo 'paid' editable directamente
+    list_editable = ['paid'] 

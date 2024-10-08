@@ -13,8 +13,8 @@ SECRET_KEY = 'django-insecure-k6!#q&!j%-om)i^-0p!%-#2k3_kjtg*@p#lx3@xu@&0i474+x5
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['18.234.251.16', 'localhost', 'v-pharma.online']
-#'18.234.251.16', 'localhost'
+ALLOWED_HOSTS = ['www.v-pharma.online', 'v-pharma.online','18.234.251.16', 'localhost']
+#'www.v-pharma.online', 'v-pharma.online','18.234.251.16', 'localhost'
 
 
 # Application definition
@@ -32,7 +32,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'cart.apps.CartConfig',
     'orders.apps.OrdersConfig',
-    'shop.apps.ShopConfig',
+    'shop.apps.ShopConfig', 
     'widget_tweaks',
 ]
 
@@ -114,9 +114,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
-LANGUAGE_CODE = 'es'
+LANGUAGE_CODE = 'es-co'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Bogota'
 
 USE_I18N = True
 
@@ -159,3 +159,10 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'julianurrea2006@gmail.com'
 EMAIL_HOST_PASSWORD = 'bsmf ilgy lgiy zzbs' 
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+# Lenguajes y zona etc
+LOCALE_PATHS = [
+    BASE_DIR / 'locale',
+]
+
+USE_I18N = True

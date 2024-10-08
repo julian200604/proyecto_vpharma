@@ -44,4 +44,3 @@ class SalesReportAdmin(admin.ModelAdmin):
         sales_report_pdf(report, response)
         
         return response
-
