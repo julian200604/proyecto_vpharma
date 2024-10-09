@@ -1,0 +1,52 @@
+{% extends "shop/base.html" %}
+
+{% load static %}
+
+{% block content %}
+<h2>Detalles de la Orden No. {{ order.id }}</h2>
+<p>Cliente: {{ order.first_name }} {{ order.last_name }}</p>
+<p>Email: {{ order.email }}</p>
+<p>Dirección: {{ order.address }}</p>
+<p>Código Postal: {{ order.postal_code }}</p>
+<p>Ciudad: {{ order.city }}</p>
+<p>Fecha: {{ order.created }}</p>
+<p>Total: ${{ order.get_total_cost }}</p>
+
+<h3>Artículos del Pedido</h3>
+<table>
+    <thead>
+        <tr>
+            <th>Referencia</th>
+            <th>Imagen</th>
+            <th>Nombre</th>
+            <th>Categoría</th>
+            <th>Precio Unitario</th>
+            <th>Precio Final</th>
+            <th>Cantidad</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in order.items.all %}
+            <tr>
+                <td>{{ item.product.id }}</td>
+                <td>
+                    {% if item.product.image %}
+                        <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" style="max-width: 100px; height: auto;" />
+                    {% else %}
+                        <img src="{% static 'images/default_image.png' %}" alt="Imagen por defecto" style="max-width: 100px; height: auto;" />
+                    {% endif %}
+                </td>
+                <td>{{ item.product.name }}</td>
+                <td>{{ item.product.category }}</td>
+                <td>${{ item.price }}</td>
+                <td>${{ item.get_cost }}</td> <!-- Precio final (puedes ajustar si es necesario) -->
+                <td>{{ item.quantity }}</td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="7">No hay artículos en esta orden.</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

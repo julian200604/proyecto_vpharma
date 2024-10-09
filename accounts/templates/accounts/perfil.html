@@ -40,7 +40,7 @@
             </svg>
             <p style="color: aliceblue; margin-top: 50px;">Hola, {{ user.username }}!</p>
           </div>
-          <a href="#" class="card-link fw-semibold" style="color: aliceblue;">Historial de compra</a>
+          <a href="{% url 'orders:order_history' %}" class="card-link fw-semibold" style="color: aliceblue;">Historial de compra</a>
           <div class="d-flex align-items-center mt-5">
             <svg xmlns="http://www.w3.org/2000/svg" width="40" fill="aliceblue" class="bi bi-box-arrow-in-right"
               viewBox="0 0 16 16">

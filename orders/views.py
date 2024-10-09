@@ -1,10 +1,11 @@
-# views.py
+from django.shortcuts import get_object_or_404
 from django.shortcuts import render, redirect
 from django.urls import reverse
+from django.contrib.auth.decorators import login_required
 from cart.cart import Cart
 from .forms import OrderCreateForm
 from .models import Order, OrderItem
-from .utils import create_invoice_pdf  # Cambia el nombre aquí
+from .utils import create_invoice_pdf
 
 def order_create(request):
     cart = Cart(request)
@@ -36,4 +37,14 @@ def order_created(request, order_id):
     return render(request, 'orders/order/created.html', {'order': order})
 
 def generate_invoice_pdf(request, order_id):
-    return create_invoice_pdf(order_id)  # Cambia el nombre aquí
+    return create_invoice_pdf(order_id)
+
+
+@login_required
+def order_history(request):
+    orders = Order.objects.filter(user=request.user)
+    return render(request, 'orders/order_history.html', {'orders': orders})
+
+def order_detail(request, order_id):
+    order = get_object_or_404(Order, id=order_id, user=request.user)
+    return render(request, 'orders/order_detail.html', {'order': order})

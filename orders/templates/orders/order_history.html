@@ -1,0 +1,86 @@
+{% extends "shop/base.html" %}
+{% load static %}
+
+{% block content %}
+<style>
+    .header-bg {
+        background-color: #9CA6FF;
+        color: white;
+    }
+    .table-container {
+        border-radius: 8px;
+        overflow: hidden;
+    }
+    .table th, .table td {
+        vertical-align: middle;
+    }
+    .highlight-row {
+        background-color: #EAE9F9;
+    }
+    .view-btn {
+        background-color: #4840BB;
+        color: white;
+        border-radius: 20px;
+        font-weight: bold;
+    }
+    .view-btn:hover {
+        background-color: #3730A3;
+        color: white;
+    }
+    .page-title {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 1.5em;
+        color: #4840BB;
+    }
+    .page-title i {
+        margin-right: 8px;
+        font-size: 1.6em;
+    }
+</style>
+
+<div class="container my-5">
+    <div class="page-title mb-4">
+        <i class="bi bi-journal-text"></i> Historial de compra
+    </div>
+
+    {% if orders %}
+        <div class="table-container">
+            <table class="table">
+                <thead class="header-bg">
+                    <tr>
+                        <th>No.Recibo</th>
+                        <th>Fecha</th>
+                        <th>Nombre del cliente</th>
+                        <th>Cantidad de productos</th>
+                        <th>Total compra</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for order in orders %}
+                    <tr class="{% cycle '' 'highlight-row' %}">
+                        <td>{{ order.id }}</td>
+                        <td>{{ order.created|date:"d/m/Y" }}</td>
+                        <td>{{ order.first_name }} {{ order.last_name }}</td>
+                        <td>{{ order.items.count }}</td>
+                        <td>${{ order.get_total_cost|floatformat:2 }}</td>
+                        <td>
+                            <a href="{% url 'orders:order_detail' order.id %}" class="btn view-btn btn-sm">
+                                Visualizar compra
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <p class="text-center">No has realizado compras aún.</p>
+    {% endif %}
+</div>
+
+{% endblock %}
+
