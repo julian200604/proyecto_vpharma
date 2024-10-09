@@ -43,17 +43,18 @@
                 <a href="{{ product.get_absolute_url }}" class="text-decoration-none" style="color: #4E50B4;">{{ product.name }}</a>
               </p>
               
-              <p class="card-text fw-semibold" style="color: #4E50B4;">
-                {% if product.promocion and product.promocion.is_active %}
+                          
+
+              <div class="d-flex justify-content-center align-items-center mt-4">
+                <p class="card-text fw-semibold" style="color: #4E50B4;">
+                  {% if product.promocion and product.promocion.is_active %}
                     <span style="text-decoration: line-through; color: #FF0000;">Precio original: ${{ product.price }}</span><br>
                     <strong>Precio con descuento: ${{ product.precio_con_descuento|floatformat:2 }}</strong><br>
                     <span style="color: #28A745;">(Descuento: {{ product.promocion.descuento }}%)</span>
-                {% else %}
+                  {% else %}
                     Precio: ${{ product.price }}
-                {% endif %}
-              </p>            
-
-              <div class="d-flex justify-content-center align-items-center mt-4">
+                  {% endif %}
+                </p>
 
                 <form action="{% url 'cart:cart_add' product.id %}" method="post" class="add-to-cart-form me-2">
                   {% csrf_token %}
