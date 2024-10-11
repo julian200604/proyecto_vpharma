@@ -72,3 +72,7 @@ def blog(request):
 
 
    
+
+
+
+   

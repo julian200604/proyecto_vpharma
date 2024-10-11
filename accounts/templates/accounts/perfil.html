@@ -61,34 +61,71 @@
           <h5 class="card-title fw-bold mb-4" style="color: #4E50B4;">Mi perfil</h5>
           <form method="post">
             {% csrf_token %}
-            <div class="form-group mb-3">
+            
+            <div class="form-group mb-4">
                 <label for="username" class="fw-semibold" style="color: #4E50B4;">Nombre de Usuario</label>
-                <input type="text" class="form-control" id="username" name="username" value="{{ form.username.value }}" placeholder="Ingrese su username">
+                {{ form.username|add_class:"form-control form-control-lg" }}
+                {% if form.username.errors %}
+                    <div class="text-danger">
+                        {{ form.username.errors }}
+                    </div>
+                {% endif %}
             </div>
-            <div class="form-group mb-3">
-              <label for="username" class="fw-semibold" style="color: #4E50B4;">Nombre de Usuario</label>
-              <input type="text" class="form-control" id="email" name="email" value="{{ form.email.value }}" placeholder="Ingrese su email">
+            
+            <div class="form-group mb-4">
+                <label for="email" class="fw-semibold" style="color: #4E50B4;">Correo electrónico</label>
+                {{ form.email|add_class:"form-control form-control-lg" }}
+                {% if form.email.errors %}
+                    <div class="text-danger">
+                        {{ form.email.errors }}
+                    </div>
+                {% endif %}
             </div>
-            <div class="form-group mb-3">
+        
+            <div class="form-group mb-4">
                 <label for="nombre_completo" class="fw-semibold" style="color: #4E50B4;">Nombre Completo</label>
-                <input type="text" class="form-control" id="nombre_completo" name="nombre_completo" value="{{ form.nombre_completo.value }}" placeholder="Ingrese su nombre completo">
+                {{ form.nombre_completo|add_class:"form-control form-control-lg" }}
+                {% if form.nombre_completo.errors %}
+                    <div class="text-danger">
+                        {{ form.nombre_completo.errors }}
+                    </div>
+                {% endif %}
             </div>
-            <div class="form-group mb-3">
-                <label for="telefono" class="fw-semibold"style="color: #4E50B4;">Teléfono</label>
-                <input type="text" class="form-control" id="telefono" name="telefono" value="{{ form.telefono.value }}" placeholder="Ingrese su teléfono">
+        
+            <div class="form-group mb-4">
+                <label for="telefono" class="fw-semibold" style="color: #4E50B4;">Teléfono</label>
+                {{ form.telefono|add_class:"form-control form-control-lg" }}
+                {% if form.telefono.errors %}
+                    <div class="text-danger">
+                        {{ form.telefono.errors }}
+                    </div>
+                {% endif %}
             </div>
-            <div class="form-group mb-3">
+        
+            <div class="form-group mb-4">
                 <label for="fecha_nacimiento" class="fw-semibold" style="color: #4E50B4;">Fecha de Nacimiento</label>
-                <input type="date" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento" value="{{ perfil.fecha_nacimiento }}" placeholder="Ingrese su fecha de nacimiento">
+                {{ form.fecha_nacimiento|add_class:"form-control form-control-lg" }}
+                {% if form.fecha_nacimiento.errors %}
+                    <div class="text-danger">
+                        {{ form.fecha_nacimiento.errors }}
+                    </div>
+                {% endif %}
             </div>
-            <div class="form-group mb-3">
+        
+            <div class="form-group mb-4">
                 <label for="direccion" class="fw-semibold" style="color: #4E50B4;">Dirección</label>
-                <input type="text" class="form-control" id="direccion" name="direccion" value="{{ form.direccion.value }}" placeholder="Ingrese su dirección">
+                {{ form.direccion|add_class:"form-control form-control-lg" }}
+                {% if form.direccion.errors %}
+                    <div class="text-danger">
+                        {{ form.direccion.errors }}
+                    </div>
+                {% endif %}
             </div>
+      
             <div class="text-center">
-              <button type="submit" class="btn rounded" style="color: #E7F1F6; background-color: #4E50B4;">Guardar Cambios</button>
+                <button type="submit" class="btn rounded" style="color: #E7F1F6; background-color: #4E50B4;">Guardar Cambios</button>
             </div>
-        </form>
+          </form>
         </div>
       </div>
     </div>

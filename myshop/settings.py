@@ -11,11 +11,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-k6!#q&!j%-om)i^-0p!%-#2k3_kjtg*@p#lx3@xu@&0i474+x5'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['www.v-pharma.online', 'v-pharma.online','18.234.251.16', 'localhost']
 #'www.v-pharma.online', 'v-pharma.online','18.234.251.16', 'localhost'
-
 
 
 # Application definition
@@ -45,6 +44,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'shop.middleware.Custom404Middleware',
+    'shop.middleware.SessionVerificationMiddleware',
 ]
 
 ROOT_URLCONF = 'myshop.urls'
@@ -52,7 +53,7 @@ ROOT_URLCONF = 'myshop.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR,  'accounts/templates'],
+        'DIRS': [os.path.join(BASE_DIR, 'myshop/templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -67,7 +68,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'myshop.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
@@ -92,7 +92,6 @@ DATABASES = {
     #    'PORT': '3306',
   #  }
 
-
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 
@@ -111,7 +110,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
@@ -123,10 +121,8 @@ USE_I18N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
-
 
 # Ruta de statics
 STATIC_URL = '/static/'
@@ -134,7 +130,6 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'shop/static'),
 ]
-
 
 # Ruta del sistema de archivos donde se almacenarán los archivos estáticos recopilados
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
@@ -167,3 +162,4 @@ LOCALE_PATHS = [
 ]
 
 USE_I18N = True
+

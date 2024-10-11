@@ -42,15 +42,15 @@ def login_view(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                request.session['logged_in'] = True
-                return redirect('perfil')
+                if user.is_superuser:
+                    return redirect('admin:index')
+                else:
+                    return redirect('perfil')
             else:
                 messages.error(request, 'Nombre de usuario o contraseña incorrectos')
         else:
             messages.error(request, 'Error al autenticar el usuario')
     else:
-        if request.session.get('logged_in'):
-            return redirect('tienda')
         form = AuthenticationForm()
     return render(request, 'accounts/login.html', {'form': form})
 
