@@ -9,9 +9,21 @@ from .forms import CartAddProductForm
 def cart_add(request, product_id):
     cart = Cart(request)
     product = get_object_or_404(Product, id=product_id)
-    quantity = int(request.POST.get('quantity', 1))  # Lee la cantidad del formulario
-    cart.add(product=product, quantity=quantity)  # Añade el producto con la cantidad especificada
+    quantity = int(request.POST.get('quantity', 1))
+    cart.add(product=product, quantity=quantity)
+    
     return JsonResponse({'success': True, 'message': 'Producto añadido al carrito'})
+    
+"""def cart_add(request, product_id):
+    cart = Cart(request)
+    product = get_object_or_404(Product, id=product_id)
+    quantity = int(request.POST.get('quantity', 1))
+    cart.add(product=product, quantity=quantity)
+    
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        return JsonResponse({'success': True, 'message': 'Producto añadido al carrito'})
+    else:
+        return redirect('cart:cart_detail')"""
 
 @require_POST
 def cart_remove(request, product_id):
