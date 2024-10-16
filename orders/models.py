@@ -53,4 +53,5 @@ class Product(models.Model):
     category = models.CharField(max_length=100, verbose_name='categoría')
     price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='precio')
     image = models.ImageField(upload_to='products/%Y/%m/%d', blank=True, verbose_name='imagen')
+
     

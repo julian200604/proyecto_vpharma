@@ -63,6 +63,9 @@ def quienes_somos(request):
 def politica_privacidad(request):
     return render(request, 'info/politica_privacidad.html')
 
+def terminos_condiciones(request):
+    return render(request, 'info/terminos_condiciones.html')
+
 def tyc(request):
     return render(request, 'info/terminos_condiciones.html')
 
