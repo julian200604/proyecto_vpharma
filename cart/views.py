@@ -13,17 +13,6 @@ def cart_add(request, product_id):
     cart.add(product=product, quantity=quantity)
     
     return JsonResponse({'success': True, 'message': 'Producto añadido al carrito'})
-    
-"""def cart_add(request, product_id):
-    cart = Cart(request)
-    product = get_object_or_404(Product, id=product_id)
-    quantity = int(request.POST.get('quantity', 1))
-    cart.add(product=product, quantity=quantity)
-    
-    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
-        return JsonResponse({'success': True, 'message': 'Producto añadido al carrito'})
-    else:
-        return redirect('cart:cart_detail')"""
 
 @require_POST
 def cart_remove(request, product_id):
@@ -37,3 +26,22 @@ def cart_detail(request):
     for item in cart:
         item['update_quantity_form'] = CartAddProductForm(initial={'quantity': item['quantity'], 'override': True})
     return render(request, 'cart/detail.html', {'cart': cart, 'is_cart_detail': True})
+
+@require_POST
+def cart_update(request, product_id):
+    cart = Cart(request)
+    product = get_object_or_404(Product, id=product_id)
+
+    if request.content_type == 'application/json':
+        import json
+        data = json.loads(request.body)
+        quantity = int(data.get('quantity', 1))
+    else:
+        quantity = int(request.POST.get('quantity', 1))
+
+    cart.add(product=product, quantity=quantity, override_quantity=True)
+    
+    # Calcular el nuevo total del carrito
+    total = cart.get_total_price()  # Asegúrate de que este método esté definido
+
+    return JsonResponse({'success': True, 'total': total})
