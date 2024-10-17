@@ -3,49 +3,111 @@
 {% load static %}
 
 {% block content %}
-<h2>Detalles de la Orden No. {{ order.id }}</h2>
-<p>Cliente: {{ order.first_name }} {{ order.last_name }}</p>
-<p>Email: {{ order.email }}</p>
-<p>Dirección: {{ order.address }}</p>
-<p>Ciudad: {{ order.city }}</p>
-<p>Fecha: {{ order.created }}</p>
-<p>Total: ${{ order.get_total_cost }}</p>
+<div style="text-align: center; margin-top: 20px;">
+    <h3 style="color: #3730A3;"><strong>No. Recibo {{ order.id }}</strong></h3>
+</div>
 
-<h3>Artículos del Pedido</h3>
-<table>
-    <thead>
+<table style="width: 80%; margin: 0 auto; border-collapse: collapse;">
+    <thead style="background-color: #A0A3FF; color: white; font-weight: bold;">
         <tr>
-            <th>Referencia</th>
-            <th>Imagen</th>
-            <th>Nombre</th>
-            <th>Categoría</th>
-            <th>Precio Unitario</th>
-            <th>Precio Final</th>
-            <th>Cantidad</th>
+            <th style="background-color: #A0A3FF; padding: 10px; border: 1px solid #ddd;">Referencia</th>
+            <th style="background-color: #A0A3FF; padding: 10px; border: 1px solid #ddd;">Imagen</th>
+            <th style="background-color: #A0A3FF; padding: 10px; border: 1px solid #ddd;">Nombre</th>
+            <th style="background-color: #A0A3FF; padding: 10px; border: 1px solid #ddd;">Categoría</th>
+            <th style="background-color: #A0A3FF; padding: 10px; border: 1px solid #ddd;">Precio Unitario</th>
+            <th style="background-color: #A0A3FF; padding: 10px; border: 1px solid #ddd;">Precio Final</th>
+            <th style="background-color: #A0A3FF; padding: 10px; border: 1px solid #ddd;">Cantidad</th>
         </tr>
     </thead>
     <tbody>
         {% for item in order.items.all %}
-            <tr>
-                <td>{{ item.product.id }}</td>
-                <td>
+            <tr style="text-align: center;">
+                <td style="background-color: white; padding: 10px; border: 1px solid #ddd;"><strong>{{ item.product.id }}</strong></td>
+                <td style="background-color: white; color: #A0A3FF; padding: 10px; border: 1px solid #ddd;">
                     {% if item.product.image %}
-                        <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" style="max-width: 100px; height: auto;" />
-                    {% else %}
-                        <img src="{% static 'images/default_image.png' %}" alt="Imagen por defecto" style="max-width: 100px; height: auto;" />
-                    {% endif %}
+                    <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" style="max-width: 100px; height: auto;" />
+                {% else %}
+                    <img src="{% static 'images/default_image.png' %}" alt="Imagen por defecto" style="max-width: 100px; height: auto;" />
+                {% endif %}
                 </td>
-                <td>{{ item.product.name }}</td>
-                <td>{{ item.product.category }}</td>
-                <td>${{ item.price }}</td>
-                <td>${{ item.get_cost }}</td> 
-                <td>{{ item.quantity }}</td>
+                <td style="background-color: white; padding: 10px; border: 1px solid #ddd;"><strong>{{ item.product.name }}</strong></td>
+                <td style="background-color: white; padding: 10px; border: 1px solid #ddd;"><strong>{{ item.product.category }}</strong></td>
+                <td style="background-color: white; padding: 10px; border: 1px solid #ddd;"><strong>${{ item.price }}</strong></td>
+                <td style="background-color: white; padding: 10px; border: 1px solid #ddd;"><strong>${{ item.get_cost }}</strong></td>
+                <td style="background-color: white; padding: 10px; border: 1px solid #ddd;"><strong>{{ item.quantity }}</strong></td>
             </tr>
         {% empty %}
             <tr>
-                <td colspan="7">No hay artículos en esta orden.</td>
+                <td colspan="7" style="padding: 10px; border: 1px solid #ddd; text-align: center;">No hay artículos en esta orden.</td>
             </tr>
         {% endfor %}
+        <tr style="text-align: right; font-weight: bold;">
+            <td colspan="6" style="padding: 10px; border: 1px solid #ddd;">Total Compra:</td>
+            <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">${{ order.get_total_cost }}</td>
+        </tr>
     </tbody>
 </table>
+
+<!-- Footer-->
+<footer class="row fixed-bottom">
+
+    <div class="col p-3 ps-4" style="background-color: #a9a9dd;">
+      <div class="card" style="width: 18rem; background-color: #e7f1f6;">
+        <div class="card-body fw-bold text-start">
+          <p class="card-text">
+            <a href="{% url 'shop:ayuda' %}" style="color: #4e50b4; text-decoration: none;">
+              <img src="{% static 'img/footer/ayuda.png' %}" alt="icon_help" width="20px"> Ayuda
+            </a>
+          </p>
+          <p>
+            <a href="{% url 'shop:quienes_somos' %}" style="color: #4e50b4; text-decoration: none;">
+              <img src="{% static 'img/footer/quienes _somos.png' %}" alt="icon_quien_somos" width="20px"> Quienes somos
+            </a>
+          </p>
+          <p>
+            <a href="{% url 'shop:politica_privacidad' %}" style="color: #4e50b4; text-decoration: none;">
+              <img src="{% static 'img/footer/politicas_privacidad.png' %}" alt="icon_PdP" width="20px"> Políticas de Privacidad
+            </a>
+          </p>
+          <p>
+            <a href="{% url 'shop:terminos_condiciones' %}" style="color: #4e50b4; text-decoration: none;">
+              <img src="{% static 'img/footer/terminos-y-condiciones.png' %}" alt="icon_TyC" width="20px"> Términos y Condiciones
+            </a>
+          </p>
+          <p>
+            <a href="{% url 'shop:blog' %}" style="color: #4e50b4; text-decoration: none;">
+              <img src="{% static 'img/footer/blog.png' %}" alt="icon_blog" width="20px"> Blog
+            </a>
+          </p>
+        </div>
+      </div>
+    </div>
+  
+    <div class="col p-3" style="background-color: #a9a9dd;">
+      <h5 style="color: white;" class="fw-bold mb-4">Contactos</h5>
+      <div class="d-flex flex-column">
+        <a style="color: white; text-decoration: none;" class="fw-semibold mb-3">
+          <img src="{% static 'img/footer/whatsapp.png' %}" alt="logo_Whatsapp" width="30px">3126647917
+        </a>
+        <a href="" style="color: white; text-decoration: none;" class="fw-semibold">
+          <img src="{% static 'img/footer/gmail.png' %}" alt="" width="30px"> v-pharma@gmail.com
+        </a>
+      </div>
+    </div>
+  
+    <div class="col p-3" style="background-color: #a9a9dd;">
+      <h5 style="color: white;" class="fw-bold mb-4">Síguenos</h5>
+      <div class="d-flex flex-column">
+        <a href="" style="color: white; text-decoration: none;" class="fw-semibold mb-3">
+          <img src="{% static 'img/footer/instagram.png' %}" alt="logo_ig" width="30px"> V-Pharma Oficial
+        </a>
+        <a href="" style="color: white; text-decoration: none;" class="fw-semibold">
+          <img src="{% static 'img/footer/facebook.png' %}" alt="logo_facebook" width="30px"> V-Pharma
+        </a>
+      </div>
+    </div>
+  
+  </footer>
+  <!-- Footer -->
+   
 {% endblock %}
