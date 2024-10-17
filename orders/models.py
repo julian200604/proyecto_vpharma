@@ -2,6 +2,12 @@ from django.db import models
 from django.contrib.auth.models import User
 
 class Order(models.Model):
+    ORDER_STATUS_CHOICES = [
+        ('pending', 'Pendiente'),
+        ('delivered', 'Entregado'),
+        ('canceled', 'Cancelado'),
+    ]
+
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     first_name = models.CharField(max_length=50, verbose_name='Nombres')
     last_name = models.CharField(max_length=50, verbose_name='Apellidos')
@@ -10,6 +16,7 @@ class Order(models.Model):
     city = models.CharField(max_length=100, verbose_name='Ciudad - Municipio')
     created = models.DateTimeField(auto_now_add=True, verbose_name='Fecha de creación')
     paid = models.BooleanField(default=False, verbose_name='Pagado')
+    status = models.CharField(max_length=10, choices=ORDER_STATUS_CHOICES, default='pending', verbose_name='Estado del pedido')
 
     class Meta:
         ordering = ['-created']
@@ -47,7 +54,7 @@ class OrderItem(models.Model):
 
     def get_cost(self):
         return self.price * self.quantity
-    
+
 class Product(models.Model):
     name = models.CharField(max_length=200, verbose_name='nombre')
     category = models.CharField(max_length=100, verbose_name='categoría')

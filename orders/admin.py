@@ -15,10 +15,11 @@ class OrderAdmin(admin.ModelAdmin):
         'address',
         'city',
         'is_paid',  
+        'status',  # Agregar el estado del pedido aquí
         'created',
         'paid' 
     ]
-    list_filter = ['paid', 'created']
+    list_filter = ['paid', 'created', 'status']  # Agregar filtro por estado
     inlines = [OrderItemInline]
 
     # Método para mostrar "Sí" o "No" en la columna de "Pagado"
@@ -29,4 +30,4 @@ class OrderAdmin(admin.ModelAdmin):
     is_paid.admin_order_field = 'paid'  
     
     # Hacer el campo 'paid' editable directamente
-    list_editable = ['paid'] 
+    list_editable = ['paid', 'status']  # Hacer el estado editable
