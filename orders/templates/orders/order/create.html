@@ -7,15 +7,73 @@
 {% block content %}
 
 <div class="container">
-  <div class="row ">
-      <div class="col-md-10 align-items-center">
+  <div class="row">
+    <div class="col-md-10 align-items-center">
       <h1 class="" style="color: #a9a9dd;"><strong>Verificar</strong></h1><br>
-        <form method="post" class="order-form">
-          {{ form.as_p }}
-          <p><input type="submit" value="Place order" style="background-color: #a9a9dd;;"></p>
-          {% csrf_token %}
-        </form>
+      
+      <form method="post" class="order-form" id="orderForm">
+        {{ form.as_p }}
+        {% csrf_token %}
+        
+        <!-- Botón deshabilitado hasta que se completen los campos -->
+        <p><input type="button" value="Place order" id="placeOrderBtn" style="background-color: #a9a9dd;" data-toggle="modal" data-target="#paymentModal" disabled></p>
+      </form>
     </div>
+  </div>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="paymentModal" tabindex="-1" role="dialog" aria-labelledby="paymentModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="paymentModalLabel">Método de Pago</h5>
+
+        </div>
+        <div class="modal-body">
+          Su método de pago va a ser en <strong>Efectivo (Contraentrega)</strong>.
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          <!-- Botón para confirmar la orden y enviar el formulario -->
+          <button type="button" class="btn btn-primary" id="confirmOrderBtn" style="background-color: #a9a9dd;">Confirmar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Script para validar el formulario y habilitar el botón -->
+  <script>
+    // Selecciona el formulario y el botón
+    const orderForm = document.getElementById('orderForm');
+    const placeOrderBtn = document.getElementById('placeOrderBtn');
+  
+    // Habilita el botón solo si todos los campos obligatorios están llenos
+    orderForm.addEventListener('input', function() {
+      let allFilled = true;
+      
+      // Revisa cada campo obligatorio del formulario
+      document.querySelectorAll('#orderForm input[required], #orderForm textarea[required], #orderForm select[required]').forEach(function(input) {
+        if (!input.value.trim()) {
+          allFilled = false;
+        }
+      });
+  
+      // Habilita o deshabilita el botón según si todos los campos están completos
+      placeOrderBtn.disabled = !allFilled;
+    });
+  
+    // Envía el formulario al confirmar en el modal
+    document.getElementById('confirmOrderBtn').addEventListener('click', function() {
+      document.querySelector('.order-form').submit();
+    });
+  </script>
+  
+  <!-- Bootstrap JS, Popper.js, jQuery (Asegúrate de tener estos recursos en tu plantilla base) -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  
+  
     <div class="col-md-2 order-info ">
       <h3>Tu Pedido</h3>
       <ul>

@@ -2,14 +2,14 @@
 {% load static %}
 
 {% block title %}
-{% if category %}{{ category.name }}{% else %}Productos{% endif %}
+{% if category %}{{ category.name }}{% else %}v-pharma.online{% endif %}
 {% endblock %}
 
 {% block content %}
 
 <!-- Categorias -->
-<nav class="category-nav mb-3">
-  <ul class="nav" style="background-color: #9394D5;">
+<nav class="category-nav mb-3 ">
+  <ul class="nav d-flex justify-content-center" style="background-color: #9394D5;">
     {% for c in categories %}
     <li class="nav-item">
       <a class="nav-link {% if category.slug == c.slug %}selected{% endif %} fw-bold" href="{{ c.get_absolute_url }}"
@@ -89,15 +89,57 @@
 </div>
 
 <!-- Card de cada producto -->
-
+<div class="container mt-3">
+  <div class="row">
+    <div class="col d d-flex justify-content-center" style="color: #4e50b4;">
+      <h2><strong>Marcas</strong></h2>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <a href="https://www.genfar.com/"><img src="../../../static/img/marcas/genfar.jpg" alt="" width="200px"></a>
+    </div>
+    <div class="col">
+      <a href="https://www.jnj.com/">
+        <img src="../../../static/img/marcas/johnson.png" alt="" width="200px">
+      </a>
+    </div>
+    <div class="col">
+      <a href="https://www.pantenela.com/es">
+        <img src="../../../static/img/marcas/pantene.png" alt="" width="200px">
+      </a>
+    </div>
+    <div class="col">
+      <a href="https://www.nivea.es/sobre-nosotros/historia-de-nivea">
+        <img src="../../../static/img/marcas/nivea.png" alt="" width="200px">
+      </a>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row ">
+    <div class="col-lg d-flex justify-content-center">
+      <a href="">
+        <img src="../../../static/img/marcas/careve.jpg" alt="logo_careve" width="200px">
+      </a>
+    </div>
+    <div class="col d-flex justify-content-center">
+      <a href="">
+        <img src="../../../static/img/marcas/bayer.png" alt="logo_Bayer" width="200px">
+      </a>
+    </div>
+  </div>
+</div>
 <!-- Footer-->
-<footer class="row fixed-bottom">
+<footer class="row">
 
   <div class="col p-3 ps-4" style="background-color: #a9a9dd;">
     <div class="card" style="width: 18rem; background-color: #e7f1f6;">
       <div class="card-body fw-bold text-start">
         <p class="card-text">
-          <a href="{% url 'shop:ayuda' %}" style="color: #4e50b4; text-decoration: none;">
+          <a href="{% static 'pdfs/ayuda-usuario.pdf' %}" style="color: #4e50b4; text-decoration: none;">
             <img src="{% static 'img/footer/ayuda.png' %}" alt="icon_help" width="20px"> Ayuda
           </a>
         </p>
@@ -117,7 +159,7 @@
           </a>
         </p>
         <p>
-          <a href="{% url 'shop:blog' %}" style="color: #4e50b4; text-decoration: none;">
+          <a href="{% url 'blog:post_list' %}" style="color: #4e50b4; text-decoration: none;">
             <img src="{% static 'img/footer/blog.png' %}" alt="icon_blog" width="20px"> Blog
           </a>
         </p>
