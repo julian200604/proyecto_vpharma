@@ -12,7 +12,10 @@ def cart_add(request, product_id):
     quantity = int(request.POST.get('quantity', 1))
     cart.add(product=product, quantity=quantity)
     
-    return JsonResponse({'success': True, 'message': 'Producto añadido al carrito'})
+    # Obtener el total de productos en el carrito
+    total_items = len(cart)  # O cart.get_total_items() si tienes un método para eso
+    
+    return JsonResponse({'success': True, 'message': 'Producto añadido al carrito', 'total_items': total_items})
 
 @require_POST
 def cart_remove(request, product_id):

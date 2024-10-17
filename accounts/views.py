@@ -12,8 +12,10 @@ from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.http import HttpResponse
+from django.views.decorators.cache import never_cache
 
 # Registro de usuario cliente
+@never_cache
 def register(request):
     if request.method == 'POST':
         form = RegistroForm(request.POST)
@@ -33,6 +35,7 @@ def register(request):
         form = RegistroForm()
     return render(request, 'accounts/register.html', {'form': form})
 
+@never_cache
 def login_view(request):
     request.session['is_valid'] = True
     if request.method == 'POST':
@@ -43,6 +46,7 @@ def login_view(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
+                messages.success(request, f'Bienvenido, {username}!')
                 if user.is_superuser:
                     return redirect('admin:index')
                 else:
@@ -75,6 +79,7 @@ def perfil(request):
 
     return render(request, 'accounts/perfil.html', {'form': form, 'perfil': perfil})
 
+@never_cache
 @login_required
 def editar_perfil(request):
     perfil = request.user.perfil
@@ -88,12 +93,14 @@ def editar_perfil(request):
 
     return render(request, 'accounts/editar_perfil.html', {'form': form})
 
+@never_cache
 # Cerrar sesión correctamente
 def logout_view(request):
     logout(request)
     messages.success(request, 'Sesión cerrada correctamente')
     return redirect('shop:product_list')
 
+@never_cache
 # Recuperación de contraseña
 def password_reset_request(request):
     if request.method == "POST":

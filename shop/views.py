@@ -4,6 +4,7 @@ from cart.forms import CartAddProductForm
 from .models import Category, Product
 from django.http import HttpResponse
 from django.utils import timezone
+from django.http import JsonResponse
 
 def product_list(request, category_slug=None):
     category = None
@@ -71,6 +72,10 @@ def tyc(request):
 
 def blog(request):
     return render(request, 'info/blog.html')
+
+def cart_count(request):
+    total_items = request.session.get('cart', {}).get('total_items', 0)  # Ajusta esto según tu lógica de carrito
+    return JsonResponse({'total_items': total_items})
 
 
 
