@@ -28,7 +28,7 @@
           <p style="color: #4E50B4;" class="fw-bold">Costos del envío:</p>
           <p style="background-color: #d9d9d9;">$</p>
           <p style="color: #4E50B4;" class="fw-bold">Precio total:</p>
-          <p style="background-color: #d9d9d9;">$ {{ cart.get_total_price }}</p>
+          <p style="background-color: #d9d9d9;" id="total-price">$ {{ cart.get_total_price }}</p> <!-- Elemento para el total -->
           <button class="btn rounded-pill mb-3" style="background-color: #34DD78;">
             <a href="{% url 'orders:order_create' %}" class="fw-bold" style="color: #4E50B4">Finalizar compra</a>
           </button>
@@ -66,12 +66,11 @@
                 <td class="align-middle">${{ item.price }}</td>
                 <!-- Columna de Cantidad con botones para modificar -->
                 <td class="align-middle">
-                  <form action="{% url 'cart:cart_add' product.id %}" method="post" class="d-flex justify-content-center align-items-center">
-                    {% csrf_token %}
-                    <button type="button" class="btn btn-secondary me-2" onclick="changeQuantity('minus', '{{ product.id }}')">-</button>
-                    <input type="number" name="quantity" id="quantity_{{ product.id }}" value="{{ item.quantity }}" min="1" class="form-control text-center" style="width: 60px; margin: 0 10px;">
-                    <button type="button" class="btn btn-secondary me-2" onclick="changeQuantity('plus', '{{ product.id }}')">+</button>
-                    <input type="submit" value="Actualizar" class="btn fw-bold rounded-pill" style="background-color: #34DD78; color: #4E50B4;">
+                  <form id="form_{{ product.id }}" class="d-flex justify-content-center align-items-center">
+                      {% csrf_token %}
+                      <button type=" button" class="btn btn-secondary me-2" onclick="changeQuantity('minus', '{{ product.id }}')">-</button>
+                      <input type="number" name="quantity" id="quantity_{{ product.id }}" value="{{ item.quantity }}" min="1" class="form-control text-center" style="width: 60px; margin: 0 10px;">
+                      <button type="button" class="btn btn-secondary me-2" onclick="changeQuantity('plus', '{{ product.id }}')">+</button>
                   </form>
                 </td>
                 <!-- Columna de Precio Total -->
@@ -95,14 +94,43 @@
 <!-- Script para manejar la modificación de la cantidad -->
 <script>
   function changeQuantity(action, productId) {
+    var quantityInput = document.getElementById('quantity_' + productId);
+    var currentValue = parseInt(quantityInput.value);
+    
+    if (action === 'plus') {
+        quantityInput.value = currentValue + 1;  // Aumenta la cantidad
+    } else if (action === 'minus' && currentValue > 1) {
+        quantityInput.value = currentValue - 1;  // Disminuye la cantidad
+    }
+
+    // Llama a updateCart automáticamente después de cambiar la cantidad
+    updateCart(productId);
+  }
+
+  function updateCart(productId) {
       var quantityInput = document.getElementById('quantity_' + productId);
-      var currentValue = parseInt(quantityInput.value);
-      
-      if (action === 'plus') {
-          quantityInput.value = currentValue + 1;
-      } else if (action === 'minus' && currentValue > 1) {
-          quantityInput.value = currentValue - 1;
-      }
+      var quantity = quantityInput.value;
+
+      fetch("{% url 'cart:cart_update' 0 %}".replace('0', productId), {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+              'X-CSRFToken': '{{ csrf_token }}'  // Agregar el token CSRF
+          },
+          body: JSON.stringify({ 'quantity': quantity })
+      })
+      .then(response => response.json())
+      .then(data => {
+          if (data.success) {
+              // Actualiza el total del carrito en la interfaz
+              document.getElementById('total-price').innerText = '$ ' + data.total;
+          } else {
+              console.error('Error al actualizar la cantidad');
+          }
+      })
+      .catch(error => {
+          console.error('Error:', error);
+      });
   }
 </script>
 

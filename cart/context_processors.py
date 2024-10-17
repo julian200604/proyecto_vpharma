@@ -1,10 +1,6 @@
 from .cart import Cart
 
 def cart(request):
-    """
-    Este context processor devuelve el carrito y además si está vacío 
-    y la cantidad total de productos en el carrito.
-    """
     cart = Cart(request)
     
     # Verificar si el carrito está vacío
