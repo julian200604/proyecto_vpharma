@@ -12,13 +12,10 @@ SECRET_KEY = 'django-insecure-k6!#q&!j%-om)i^-0p!%-#2k3_kjtg*@p#lx3@xu@&0i474+x5
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-<<<<<<< HEAD
-#ALLOWED_HOSTS = ['localhost', '127.0.0.1']
-ALLOWED_HOSTS = []
-=======
 
-ALLOWED_HOSTS = ['www.v-pharma.online', 'v-pharma.online','18.234.251.16', 'localhost']
->>>>>>> 6cc34d90123e3ee7d0880696e6c8384682808abc
+#ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+
+ALLOWED_HOSTS = []
 #'www.v-pharma.online', 'v-pharma.online','18.234.251.16', 'localhost'
 
 
@@ -39,6 +36,7 @@ INSTALLED_APPS = [
     'orders.apps.OrdersConfig',
     'shop.apps.ShopConfig', 
     'widget_tweaks',
+    'blog.apps.BlogConfig',
 ]
 
 MIDDLEWARE = [
@@ -80,9 +78,9 @@ WSGI_APPLICATION = 'myshop.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'v-pharma',
+        'NAME': 'myshop_db',
         'USER': 'root',
-        'PASSWORD': 'rootsena',
+        'PASSWORD': 'root',
         'HOST': 'localhost',
         'PORT': '3306',
     }

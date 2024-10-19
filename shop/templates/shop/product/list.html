@@ -2,14 +2,28 @@
 {% load static %}
 
 {% block title %}
-{% if category %}{{ category.name }}{% else %}Productos{% endif %}
+{% if category %}{{ category.name }}{% else %}v-pharma.online{% endif %}
 {% endblock %}
+
+<style>
+  main {
+    flex: 1;
+  }
+  footer {
+    background-color: #9394D5;
+    padding: 0;
+    text-align: center;
+    width: 100%;
+    margin: 0;
+  }
+</style>
+
 
 {% block content %}
 
 <!-- Categorias -->
-<nav class="category-nav mb-3">
-  <ul class="nav" style="background-color: #9394D5;">
+<nav class="category-nav mb-3 ">
+  <ul class="nav d-flex justify-content-center" style="background-color: #9394D5;">
     {% for c in categories %}
     <li class="nav-item">
       <a class="nav-link {% if category.slug == c.slug %}selected{% endif %} fw-bold" href="{{ c.get_absolute_url }}"
@@ -87,70 +101,128 @@
     {% endif %}
   </div>
 </div>
-
 <!-- Card de cada producto -->
 
+<!-- Marcas -->
+<div class="container mt-3">
+      <h2 class="col d-flex justify-content-center fw-bold mb-5" style="color: #4e50b4; font-size: 50px;">Marcas</h2>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <a href="https://www.genfar.com/"><img src="../../../static/img/marcas/genfar.jpg" alt="" width="200px"></a>
+    </div>
+    <div class="col">
+      <a href="https://www.jnj.com/">
+        <img src="../../../static/img/marcas/johnson.png" alt="" width="200px">
+      </a>
+    </div>
+    <div class="col">
+      <a href="https://www.pantenela.com/es">
+        <img src="../../../static/img/marcas/pantene.png" alt="" width="200px">
+      </a>
+    </div>
+    <div class="col">
+      <a href="https://www.nivea.es/sobre-nosotros/historia-de-nivea">
+        <img src="../../../static/img/marcas/nivea.png" alt="" width="200px">
+      </a>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row" style="margin-bottom: 100px;">
+    <div class="col-lg d-flex justify-content-center">
+      <a href="">
+        <img src="../../../static/img/marcas/careve.jpg" alt="logo_careve" width="200px">
+      </a>
+    </div>
+    <div class="col d-flex justify-content-center">
+      <a href="">
+        <img src="../../../static/img/marcas/bayer.png" alt="logo_Bayer" width="200px">
+      </a>
+    </div>
+  </div>
+</div>
+<!-- Marcas -->
+
+
 <!-- Footer-->
-<footer class="row">
+<footer class="container-fluid" style="background-color: #9394D5;">
+  <div class="container">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="card p-4 mt-3" style="background-color: #E7F1F6; border-radius: 15px;">
+            <ul class="list-unstyled">
+              <li class="mb-3" >
+                <a href="{% static 'pdfs/ayuda-usuario.pdf' %}" style="color: #4e50b4; text-decoration: none;" class="fw-semibold">
+                  <img src="{% static 'img/footer/ayuda.png' %}" alt="icon_help" width="20px"> Ayuda
+                </a>
+              </li>
+              <li class="mb-3">
+                <a href="{% url 'shop:quienes_somos' %}" style="color: #4e50b4; text-decoration: none;" class="fw-semibold">
+                  <img src="{% static 'img/footer/quienes _somos.png' %}" alt="icon_quien_somos" width="20px"> Quienes somos
+                </a>
+              </li>
+              <li class="mb-3">
+                <a href="{% url 'shop:politica_privacidad' %}" style="color: #4e50b4; text-decoration: none;" class="fw-semibold">
+                  <img src="{% static 'img/footer/politicas_privacidad.png' %}" alt="icon_PdP" width="20px"> Políticas de Privacidad
+                </a>
+              </li>
+              <li class="mb-3">
+                <a href="{% url 'shop:terminos_condiciones' %}" style="color: #4e50b4; text-decoration: none;" class="fw-semibold">
+                  <img src="{% static 'img/footer/terminos-y-condiciones.png' %}" alt="icon_TyC" width="20px"> Términos y Condiciones
+                </a>
+              </li>
+              <li>
+                <a href="{% url 'blog:post_list' %}" style="color: #4e50b4; text-decoration: none;" class="fw-semibold">
+                  <img src="{% static 'img/footer/blog.png' %}" alt="icon_blog" width="20px"> Blog
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+          <div class="col-md-4">
+              <h5 class="fw-bold mb-4 mt-5" style="color: #E7F1F6;">Contactanos</h5>
+              <ul class="list-unstyled">
+                  <li class="mb-2">
+                    <a style="color: white; text-decoration: none;" class="fw-semibold">
+                      <img src="{% static 'img/footer/whatsapp.png' %}" alt="logo_Whatsapp" width="30px">3126647917
+                    </a>
+                  </li>
+                  <li>
+                    <a href="" style="color: white; text-decoration: none;" class="fw-semibold">
+                      <img src="{% static 'img/footer/gmail.png' %}" alt="" width="30px"> v-pharma@gmail.com
+                    </a>
+                  </li>
+              </ul>
+          </div>
+          <div class="col-md-4">
+              <h5 class="fw-bold mt-5 mb-4" style="color: #E7F1F6;">Síguenos</h5>
+              <ul class="list-unstyled">
+                  <li class="mb-2">
+                    <a href="" style="color: white; text-decoration: none;" class="fw-semibold mb-3">
+                      <img src="{% static 'img/footer/instagram.png' %}" alt="logo_ig" width="30px"> V-Pharma Oficial
+                    </a>
+                  </li>
+                  <li>
+                    <a href="" style="color: white; text-decoration: none;" class="fw-semibold">
+                      <img src="{% static 'img/footer/facebook.png' %}" alt="logo_facebook" width="30px"> V-Pharma
+                    </a>
+                  </li>
+                  <li>
 
-  <div class="col p-3 ps-4" style="background-color: #a9a9dd;">
-    <div class="card" style="width: 18rem; background-color: #e7f1f6;">
-      <div class="card-body fw-bold text-start">
-        <p class="card-text">
-          <a href="{% url 'shop:ayuda' %}" style="color: #4e50b4; text-decoration: none;">
-            <img src="{% static 'img/footer/ayuda.png' %}" alt="icon_help" width="20px"> Ayuda
-          </a>
-        </p>
-        <p>
-          <a href="{% url 'shop:quienes_somos' %}" style="color: #4e50b4; text-decoration: none;">
-            <img src="{% static 'img/footer/quienes _somos.png' %}" alt="icon_quien_somos" width="20px"> Quienes somos
-          </a>
-        </p>
-        <p>
-          <a href="{% url 'shop:politica_privacidad' %}" style="color: #4e50b4; text-decoration: none;">
-            <img src="{% static 'img/footer/politicas_privacidad.png' %}" alt="icon_PdP" width="20px"> Políticas de Privacidad
-          </a>
-        </p>
-        <p>
-          <a href="{% url 'shop:terminos_condiciones' %}" style="color: #4e50b4; text-decoration: none;">
-            <img src="{% static 'img/footer/terminos-y-condiciones.png' %}" alt="icon_TyC" width="20px"> Términos y Condiciones
-          </a>
-        </p>
-        <p>
-          <a href="{% url 'shop:blog' %}" style="color: #4e50b4; text-decoration: none;">
-            <img src="{% static 'img/footer/blog.png' %}" alt="icon_blog" width="20px"> Blog
-          </a>
-        </p>
+                  </li>
+              </ul>
+          </div>
       </div>
-    </div>
+      <div class="text-center mt-3 fw-semibold">
+          <p style="color: #E7F1F6;">&copy; 2024 V-Pharma. Todos los derechos reservados.</p>
+      </div>
   </div>
-
-  <div class="col p-3" style="background-color: #a9a9dd;">
-    <h5 style="color: white;" class="fw-bold mb-4">Contactos</h5>
-    <div class="d-flex flex-column">
-      <a style="color: white; text-decoration: none;" class="fw-semibold mb-3">
-        <img src="{% static 'img/footer/whatsapp.png' %}" alt="logo_Whatsapp" width="30px">3126647917
-      </a>
-      <a href="" style="color: white; text-decoration: none;" class="fw-semibold">
-        <img src="{% static 'img/footer/gmail.png' %}" alt="" width="30px"> v-pharma@gmail.com
-      </a>
-    </div>
-  </div>
-
-  <div class="col p-3" style="background-color: #a9a9dd;">
-    <h5 style="color: white;" class="fw-bold mb-4">Síguenos</h5>
-    <div class="d-flex flex-column">
-      <a href="" style="color: white; text-decoration: none;" class="fw-semibold mb-3">
-        <img src="{% static 'img/footer/instagram.png' %}" alt="logo_ig" width="30px"> V-Pharma Oficial
-      </a>
-      <a href="" style="color: white; text-decoration: none;" class="fw-semibold">
-        <img src="{% static 'img/footer/facebook.png' %}" alt="logo_facebook" width="30px"> V-Pharma
-      </a>
-    </div>
-  </div>
-
 </footer>
 <!-- Footer -->
+
+
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
@@ -174,7 +246,4 @@
         });
     });
 </script>
-
-
-
 {% endblock %}

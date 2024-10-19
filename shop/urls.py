@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from . import views
 from django.conf import settings
 from django.conf.urls.static import static
@@ -14,7 +14,7 @@ urlpatterns = [
     path('politica_privacidad/', views.politica_privacidad, name='politica_privacidad'),
     path('terminos_condiciones/', views.terminos_condiciones, name='terminos_condiciones'),
     path('tyc/', views.tyc, name='tyc'),
-    path('blog/', views.blog, name='blog'),
+    path('blog/', include('blog.urls', namespace='blog')),
     path('', views.product_list, name='product_list'),
     path('<slug:category_slug>/', views.product_list,name='product_list_by_category'),
     path('<int:id>/<slug:slug>/', views.product_detail, name='product_detail'),

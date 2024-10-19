@@ -1,0 +1,29 @@
+{% extends "blog/base.html" %}
+
+{% block title %}v-pharma.online{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <h4 class="text-center mb-4 fw-bold" style="color: #4E50B4;">Publicaciones de interes</h4>
+  <div class="row">
+    {% for post in posts %}
+      {% if forloop.first or forloop.counter0|divisibleby:2 %}
+        <!-- Start a new row if it's the first post or if the current index is divisible by 2 -->
+        <div class="w-100"></div>
+      {% endif %}
+      <div class="col-md-6 mb-4 d-flex align-items-stretch">
+        <div class="card shadow-lg h-100 ms-md-4 me-4">
+          <div class="card-body">
+            <h5 class="card-title">{{ post.title }}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">Published {{ post.publish|date:"F j, Y" }} by {{ post.author }}</h6>
+            <p class="card-text">{{ post.body|truncatewords:30|linebreaks }}</p>
+          </div>
+          <div class="card-footer bg-transparent border-0">
+            <a href="{% url 'blog:post_detail' post.id %}" class="btn btn-primary btn-sm">Ver</a>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
