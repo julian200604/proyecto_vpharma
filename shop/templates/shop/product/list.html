@@ -24,7 +24,7 @@
 <nav class="category-nav mb-3 ">
   <ul class="nav d-flex justify-content-center" style="background-color: #9394D5;">
     {% for c in categories %}
-    <li class="nav-item">
+    <li class="nav-item" style="font-size: 25px">
       <a class="nav-link {% if category.slug == c.slug %}selected{% endif %} fw-bold" href="{{ c.get_absolute_url }}"
         style="color: #E7F1F6;">{{ c.name }}</a>
     </li>
@@ -36,7 +36,7 @@
 <!-- Contenedor para mensajes -->
 <div id="message" class="alert alert-success" style="display: none;"></div>
 
-<h2 class="text-center fw-bold" style="color: #4E50B4;">
+<h2 class="text-center fw-bold" style="color: #4E50B4; font-size: 25px;">
   {% if category %}{{ category.name }}{% else %} Productos destacados {% endif %}
 </h2>
 
@@ -104,26 +104,26 @@
 
 <!-- Marcas -->
 <div class="container mt-3">
-      <h2 class="col d-flex justify-content-center fw-bold mb-5" style="color: #4e50b4; font-size: 50px;">Marcas</h2>
+      <h2 class="col d-flex justify-content-center fw-bold mb-5" style="color: #4e50b4; font-size: 25px;">Marcas</h2>
 </div>
 <div class="container">
   <div class="row">
     <div class="col">
-      <a href="https://www.genfar.com/"><img src="../../../static/img/marcas/genfar.jpg" alt="" width="200px"></a>
+      <a href="https://www.genfar.com/" target="_blank"><img src="../../../static/img/marcas/genfar.jpg" alt="" width="150px"></a>
     </div>
     <div class="col">
-      <a href="https://www.jnj.com/">
-        <img src="../../../static/img/marcas/johnson.png" alt="" width="200px">
+      <a href="https://www.jnj.com/" target="_blank">
+        <img src="../../../static/img/marcas/johnson.png" alt="" width="150px">
       </a>
     </div>
     <div class="col">
-      <a href="https://www.pantenela.com/es">
-        <img src="../../../static/img/marcas/pantene.png" alt="" width="200px">
+      <a href="https://www.pantenela.com/es" target="_blank">
+        <img src="../../../static/img/marcas/pantene.png" alt="" width="150px">
       </a>
     </div>
     <div class="col">
-      <a href="https://www.nivea.es/sobre-nosotros/historia-de-nivea">
-        <img src="../../../static/img/marcas/nivea.png" alt="" width="200px">
+      <a href="https://www.nivea.es/sobre-nosotros/historia-de-nivea" target="_blank">
+        <img src="../../../static/img/marcas/nivea.png" alt="" width="150px">
       </a>
     </div>
   </div>
@@ -132,13 +132,13 @@
   <div class="row" style="margin-bottom: 100px;">
   <div class="row ">
     <div class="col-lg d-flex justify-content-center">
-      <a href="">
-        <img src="../../../static/img/marcas/careve.jpg" alt="logo_careve" width="200px">
+      <a href="https://www.cerave.co/?gad_source=1&gclid=Cj0KCQjw99e4BhDiARIsAISE7P_4yK-cHK9RVt5bmDQ4bRMrB9K_XcuhIKgo6loPFATnSnc6M3Kh99waAs0sEALw_wcB" target="_blank">
+        <img src="../../../static/img/marcas/careve.jpg" alt="logo_careve" width="150px">
       </a>
     </div>
     <div class="col d-flex justify-content-center">
-      <a href="">
-        <img src="../../../static/img/marcas/bayer.png" alt="logo_Bayer" width="200px">
+      <a href="https://www.bayer.com/es/co/andina-y-cac-home" target="_blank">
+        <img src="../../../static/img/marcas/bayer.png" alt="logo_Bayer" width="150px">
       </a>
     </div>
   </div>
@@ -147,7 +147,7 @@
 
 
 <!-- Footer-->
-<footer class="container-fluid p-4" style="background-color: #9394D5; width: 100%; height: 250px;">
+<footer class="container-fluid p-4 rounded-4" style="background-color: #9394D5; width: 100%; height: 250px;">
   <div class="container">
       <div class="row">
         <div class="col-md-4">
