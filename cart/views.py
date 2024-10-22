@@ -4,6 +4,7 @@ from django.views.decorators.http import require_POST
 from shop.models import Product
 from .cart import Cart
 from .forms import CartAddProductForm
+from orders.forms import OrderCreateForm
 
 @require_POST
 def cart_add(request, product_id):
@@ -26,9 +27,10 @@ def cart_remove(request, product_id):
 
 def cart_detail(request):
     cart = Cart(request)
+    form = OrderCreateForm()
     for item in cart:
         item['update_quantity_form'] = CartAddProductForm(initial={'quantity': item['quantity'], 'override': True})
-    return render(request, 'cart/detail.html', {'cart': cart, 'is_cart_detail': True})
+    return render(request, 'cart/detail.html', {'cart': cart, 'is_cart_detail': True, 'form': form})
 
 @require_POST
 def cart_update(request, product_id):
@@ -40,7 +42,7 @@ def cart_update(request, product_id):
         data = json.loads(request.body)
         quantity = int(data.get('quantity', 1))
     else:
-        quantity = int(request.POST.get('quantity', 1))
+        quantity = int(request.POST.get ('quantity', 1))
 
     cart.add(product=product, quantity=quantity, override_quantity=True)
     

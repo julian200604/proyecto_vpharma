@@ -7,12 +7,21 @@ class Order(models.Model):
         ('delivered', 'Entregado'),
         ('canceled', 'Cancelado'),
     ]
-
+    
+    PAYMENT_METHOD_CHOICES = [
+        ('cash_on_delivery', 'Contra entrega'),
+        ('pick_up', 'Yo retiro'),
+    ]
+    
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     first_name = models.CharField(max_length=50, verbose_name='Nombres')
     last_name = models.CharField(max_length=50, verbose_name='Apellidos')
     email = models.EmailField(verbose_name='Correo electrónico')
     address = models.CharField(max_length=250, verbose_name='Dirección', null=True, blank=True)
+    neighborhood = models.CharField(max_length=100, verbose_name='Barrio', null=True, blank=True)
+    directions = models.TextField(verbose_name='Indicaciones', null=True, blank=True)
+    phone_number = models.CharField(max_length=15, verbose_name='Número de teléfono', default="0000000000")
+    payment_method = models.CharField(max_length=20, choices=PAYMENT_METHOD_CHOICES, verbose_name='Método de pago', default='cash_on_delivery')
     city = models.CharField(max_length=100, verbose_name='Ciudad - Municipio')
     created = models.DateTimeField(auto_now_add=True, verbose_name='Fecha de creación')
     paid = models.BooleanField(default=False, verbose_name='Pagado')
@@ -23,14 +32,12 @@ class Order(models.Model):
         indexes = [
             models.Index(fields=['-created']),
         ]
-        verbose_name = 'orden'  
+        verbose_name = 'orden'
         verbose_name_plural = 'ordenes'
 
     def __str__(self):
         return f'Order {self.id}'
 
-    def get_total_cost(self):
-        return sum(item.get_cost() for item in self.items.all())
 
 class OrderItem(models.Model):
     order = models.ForeignKey(

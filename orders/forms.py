@@ -1,7 +1,5 @@
 from django import forms
-
 from .models import Order
-
 
 class OrderCreateForm(forms.ModelForm):
     class Meta:
@@ -9,7 +7,12 @@ class OrderCreateForm(forms.ModelForm):
         fields = [
             'first_name',
             'last_name',
-            'email',
             'address',
-            'city',
+            'neighborhood',
+            'directions',
+            'phone_number',
+            'payment_method',
         ]
+        widgets = {
+            'payment_method': forms.RadioSelect(),
+        }
