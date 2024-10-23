@@ -4,6 +4,75 @@
 {% block title %}Informe de Ventas{% endblock %}
 
 {% block content %}
+  <style>
+      .sales-report-container {
+          max-width: 800px;
+          margin: 20px auto;
+          padding: 20px;
+          border: 1px solid #dee2e6;
+          border-radius: 8px;
+          background-color: #f8f9fa;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .sales-report-container h1 {
+          font-size: 24px;
+          margin-bottom: 20px;
+          color: #343a40;
+          text-align: center;
+      }
+
+      .sales-report-container h2 {
+          font-size: 20px;
+          margin-top: 20px;
+          color: #495057;
+      }
+
+      .sales-report-container h3 {
+          font-size: 18px;
+          margin-top: 15px;
+          color: #6c757d;
+      }
+
+      .sales-report-container .btn {
+          font-size: 16px;
+          padding: 10px;
+      }
+
+      .sales-report-container .table {
+          margin-top: 20px;
+          border-collapse: collapse;
+          width: 100%;
+      }
+
+      .sales-report-container .table th,
+      .sales-report-container .table td {
+          text-align: left;
+          padding: 12px;
+          border-bottom: 1px solid #dee2e6;
+      }
+
+      .sales-report-container .table th {
+          background-color: #007bff;
+          color: white;
+      }
+
+      .sales-report-container .table-striped tbody tr:nth-of-type(odd) {
+          background-color: #f2f2f2;
+      }
+
+      .sales-report-container .result-summary {
+          margin-top: 20px;
+          font-weight: bold;
+          color: #343a40;
+      }
+
+      .sales-report-container hr {
+          border-top: 2px solid #007bff;
+          margin: 20px 0;
+      }
+  </style>
+
   <div class="sales-report-container">
     <h1>Generar Informe de Ventas</h1>
     <form method="get" class="row g-3 align-items-center" action="">
@@ -24,10 +93,12 @@
 
     {% if report_data %}
       <hr>
-      <h2>Resultados del Informe</h2>
-      <p>Total de ventas: {{ total_sales }}</p>
-      <p>Total de órdenes: {{ total_orders }}</p>
-      <p>Venta promedio por pedido: {{ avg_sales_per_order }}</p>
+      <div class="result-summary">
+        <h2>Resultados del Informe</h2>
+        <p>Total de ventas: {{ total_sales }}</p>
+        <p>Total de órdenes: {{ total_orders }}</p>
+        <p>Venta promedio por pedido: {{ avg_sales_per_order }}</p>
+      </div>
 
       <h3>Ventas por Producto</h3>
       <table class="table table-striped">
