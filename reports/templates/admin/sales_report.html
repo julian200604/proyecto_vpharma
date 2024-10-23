@@ -1,53 +1,54 @@
 {% extends "admin/base_site.html" %}
+{% load static %}
+
+{% block title %}Informe de Ventas{% endblock %}
 
 {% block content %}
-<div class="container mt-5">
-    <h2 class="text-center mb-4" style="color: #4A4A4A; font-weight: bold;">Informe de Ventas</h2>
+  <div class="sales-report-container">
+    <h1>Generar Informe de Ventas</h1>
+    <form method="get" class="row g-3 align-items-center" action="">
+      <div class="col-md-5">
+        {{ form.as_p }}
+      </div>
+      <div class="col-md-2">
+        <button type="submit" name="generate_pdf" class="btn btn-primary w-100">
+          <i class="fas fa-file-pdf"></i> Generar Informe en PDF
+        </button>
+      </div>
+      <div class="col-md-2">
+        <button type="submit" name="generate_csv" class="btn btn-secondary w-100" style="background-color: #3730A3; border: none;">
+          <i class="fas fa-file-csv"></i> Generar Informe en CSV
+        </button>
+      </div>
+    </form>
 
-    <!-- Formulario de filtro por fechas -->
-    <div class="card p-4 shadow-sm mb-4">
-        <h5 class="card-title mb-3" style="color: #3730A3;"><strong>Filtrar por Fechas</strong></h5>
-        <form method="get" class="row g-3 align-items-center">
-            <div class="col-md-5">
-                {{ form.as_p }}
-            </div>
-            <div class="col-md-2">
-                <button type="submit" class="btn btn-primary w-100" style="background-color: #3730A3; border: none;">
-                    <i class="fas fa-file-pdf"></i> Generar Informe en PDF
-                </button>
-            </div>
-        </form>
-    </div>
+    {% if report_data %}
+      <hr>
+      <h2>Resultados del Informe</h2>
+      <p>Total de ventas: {{ total_sales }}</p>
+      <p>Total de órdenes: {{ total_orders }}</p>
+      <p>Venta promedio por pedido: {{ avg_sales_per_order }}</p>
 
-
-    <!-- Tabla de detalles del informe -->
-    {% if orders %}
-    <div class="table-responsive mt-4">
-        <table class="table table-bordered table-hover shadow-sm">
-            <thead class="table-dark">
-                <tr class="text-center">
-                    <th>Fecha</th>
-                    <th>Número de Orden</th>
-                    <th>Cliente</th>
-                    <th>Total de Venta</th>
-                    <th>Estado</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for order in orders %}
-                <tr>
-                    <td>{{ order.date|date:"d/m/Y" }}</td>
-                    <td>{{ order.order_number }}</td>
-                    <td>{{ order.customer_name }}</td>
-                    <td>${{ order.total_amount }}</td>
-                    <td>{{ order.status }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
+      <h3>Ventas por Producto</h3>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Producto</th>
+            <th>Cantidad Vendida</th>
+            <th>Total Vendido</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in product_sales %}
+            <tr>
+              <td>{{ item.product__name }}</td>
+              <td>{{ item.total_quantity }}</td>
+              <td>{{ item.total_sales }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
     {% endif %}
-</div>
-
-
+  </div>
 {% endblock %}
+
