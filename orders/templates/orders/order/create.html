@@ -1,5 +1,4 @@
 {% extends "shop/base.html" %}
-{% load widget_tweaks %}
 
 {% block title %}
   Checkout
@@ -7,123 +6,31 @@
 
 {% block content %}
 
-<div class="container my-5">
-  <div class="row">
-    <div class="col-md-10 offset-md-1">
-      <div class="card">
-        <div class="card-header text-center" style="background-color: #a9a9dd; color: white;">
-          <h1><strong>Verificar</strong></h1>
-        </div>
-        <div class="card-body">
-          <form method="post" class="order-form" id="orderForm">
-            {% csrf_token %}
-            
-            <div class="mb-4">
-              <h3>¿Quién recibe?</h3>
-              <div class="form-group">
-                {{ form.first_name.label_tag }} 
-                {{ form.first_name|add_class:"form-control" }}
-              </div>
-              <div class="form-group">
-                {{ form.last_name.label_tag }} 
-                {{ form.last_name|add_class:"form-control" }}
-              </div>
-            </div>
-            
-            <div class="mb-4">
-              <h3>¿Dónde lo recibe?</h3>
-              <div class="form-group">
-                {{ form.address.label_tag }} 
-                {{ form.address|add_class:"form-control" }}
-              </div>
-              <div class="form-group">
-                {{ form.neighborhood.label_tag }} 
-                {{ form.neighborhood|add_class:"form-control" }}
-              </div>
-              <div class="form-group">
-                {{ form.directions.label_tag }} 
-                {{ form.directions|add_class:"form-control" }}
-              </div>
-              <div class="form-group">
-                {{ form.phone_number.label_tag }} 
-                {{ form.phone_number|add_class:"form-control" }}
-              </div>
-            </div>
-            
-            <div class="mb-4">
-              <h3>Método de Pago</h3>
-              <div class="form-group">
-                {{ form.payment_method.label_tag }}
-                <div class="form-check">
-                  {% for choice in form.payment_method %}
-                    <input class="form-check-input" type="radio" name="{{ choice.name }}" id="{{ choice.id_for_label }}" value="{{ choice.choice_value }}">
-                    <label class="form-check-label" for="{{ choice.id_for_label }}">
-                      {{ choice.choice_label }}
-                    </label>
-                    <br>
-                  {% endfor %}
-                </div>
-              </div>
-            </div>
-            
-            <button type="button" class="btn btn-success btn-block" id="placeOrderBtn" style="background-color: #34DD78; color: #4E50B4;" data-toggle="modal" data-target="#paymentModal">Aceptar</button>
-          </form>
-        </div>
-      </div>
+<div class="container">
+  <div class="row ">
+      <div class="col-md-10 align-items-center">
+      <h1 class="" style="color: #a9a9dd;"><strong>Verificar</strong></h1><br>
+        <form method="post" class="order-form">
+          {{ form.as_p }}
+          <p><input type="submit" value="Place order" style="background-color: #a9a9dd;;"></p>
+          {% csrf_token %}
+        </form>
+    </div>
+    <div class="col-md-2 order-info ">
+      <h3>Tu Pedido</h3>
+      <ul>
+        {% for item in cart %}
+          <li>
+            {{ item.quantity }}x {{ item.product.name }}
+            <span>${{ item.total_price }}</span>
+          </li>
+        {% endfor %}
+      </ul>
+      <p>Total: ${{ cart.get_total_price }}</p>
     </div>
   </div>
+</div>
   
-  <!-- Modal -->
-  <div class="modal fade" id="paymentModal" tabindex="-1" role="dialog" aria-labelledby="paymentModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="paymentModalLabel">Método de Pago</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          Su método de pago va a ser en <strong>Efectivo (Contraentrega)</strong>.
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-          <button type="button" class="btn btn-primary" id="confirmOrderBtn" style="background-color: #a9a9dd;">Confirmar</button>
-        </div>
-      </div>
-    </div>
-  </div>
+ 
   
-  <!-- Script para validar el formulario y habilitar el botón -->
-  <script>
-    // Selecciona el formulario y el botón
-    const orderForm = document.getElementById('orderForm');
-    const placeOrderBtn = document.getElementById('placeOrderBtn');
-  
-    // Habilita el botón solo si todos los campos obligatorios están llenos
-    orderForm.addEventListener('input', function() {
-      let allFilled = true;
-      
-      // Revisa cada campo obligatorio del formulario
-      document.querySelectorAll('#orderForm input[required], #orderForm textarea[required], #orderForm select[required]').forEach(function(input) {
-        if (!input.value.trim()) {
-          allFilled = false;
-        }
-      });
-  
-      // Habilita o deshabilita el botón según si todos los campos están completos
-      placeOrderBtn.disabled = !allFilled;
-    });
-  
-    // Envía el formulario al confirmar en el modal
-    document.getElementById('confirmOrderBtn').addEventListener('click', function() {
-      document.querySelector('.order-form').submit();
-    });
-  </script>
-  
-  <!-- Bootstrap JS, Popper.js, jQuery (Asegúrate de tener estos recursos en tu plantilla base) -->
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 {% endblock %}
-

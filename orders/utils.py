@@ -96,7 +96,7 @@ def create_invoice_pdf(order_id):
     pdf_content = buffer.getvalue()
     buffer.close()
 
-    # Crear una respuesta HTTP para el archivo PDF
+    # Crear una respuzzesta HTTP para el archivo PDF
     response = HttpResponse(pdf_content, content_type='application/pdf')
     response['Content-Disposition'] = f'attachment; filename="invoice_{order_id}.pdf"'
     

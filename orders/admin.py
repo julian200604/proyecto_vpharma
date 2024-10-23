@@ -11,23 +11,23 @@ class OrderAdmin(admin.ModelAdmin):
         'id',
         'first_name',
         'last_name',
+        'email',
         'address',
-        'neighborhood',
-        'directions',
-        'phone_number',
-        'payment_method',
         'city',
-        'is_paid',
-        'status',
+        'is_paid',  
+        'status',  # Agregar el estado del pedido aquí
         'created',
-        'paid'
+        'paid' 
     ]
-    list_filter = ['paid', 'created', 'status', 'payment_method']
+    list_filter = ['paid', 'created', 'status']  # Agregar filtro por estado
     inlines = [OrderItemInline]
-    list_editable = ['paid', 'status']
 
+    # Método para mostrar "Sí" o "No" en la columna de "Pagado"
     def is_paid(self, obj):
         return "Sí pago" if obj.paid else "No ha pagado"
 
-    is_paid.short_description = 'Estado de pago'
-    is_paid.admin_order_field = 'paid'
+    is_paid.short_description = 'Estado de pago'  
+    is_paid.admin_order_field = 'paid'  
+    
+    # Hacer el campo 'paid' editable directamente
+    list_editable = ['paid', 'status']  # Hacer el estado editable

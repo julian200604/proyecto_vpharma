@@ -9,7 +9,6 @@ from .utils import create_invoice_pdf
 
 def order_create(request):
     cart = Cart(request)
-    
     if request.method == 'POST':
         form = OrderCreateForm(request.POST)
         if form.is_valid():
@@ -26,18 +25,8 @@ def order_create(request):
             cart.clear()
             return redirect(reverse('orders:order_created', kwargs={'order_id': order.id}))
     else:
-        # Si el usuario está autenticado y ya tiene una orden, cargamos los datos de la última orden.
-        if request.user.is_authenticated:
-            previous_order = Order.objects.filter(user=request.user).last()
-            if previous_order:
-                form = OrderCreateForm(instance=previous_order)
-            else:
-                form = OrderCreateForm()
-        else:
-            form = OrderCreateForm()
-
+        form = OrderCreateForm()
     return render(request, 'orders/order/create.html', {'cart': cart, 'form': form})
-
 
 def order_created(request, order_id):
     try:
