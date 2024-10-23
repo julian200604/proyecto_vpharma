@@ -75,7 +75,7 @@ WSGI_APPLICATION = 'myshop.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'proyecto',
+        'NAME': 'myshop_db2',
         'USER': 'root',
         'PASSWORD': 'root',
         'HOST': 'localhost',
@@ -151,7 +151,7 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'julianurrea2006@gmail.com'
-EMAIL_HOST_PASSWORD = 'bsmf ilgy lgiy zzbs' 
+EMAIL_HOST_PASSWORD = 'rwbh rgel bqsj tphj' 
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 # Lenguajes y zona etc

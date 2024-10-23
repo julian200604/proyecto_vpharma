@@ -50,21 +50,23 @@ class RegistroForm(UserCreationForm):
 
 class EditarPerfilForm(forms.ModelForm):
     username = forms.CharField(max_length=150)
+    email = forms.EmailField(required=True)
 
     class Meta:
-        model = Perfil
-        fields = ('email', 'nombre_completo', 'telefono', 'fecha_nacimiento', 'direccion')
+        model = Perfil  # El modelo es Perfil, pero gestionaremos el email de User
+        fields = ('nombre_completo', 'telefono', 'fecha_nacimiento', 'direccion')
 
     def __init__(self, *args, **kwargs):
         super(EditarPerfilForm, self).__init__(*args, **kwargs)
         self.fields['username'].initial = self.instance.user.username
+        self.fields['email'].initial = self.instance.user.email  # Inicializa el email desde el modelo User
 
     def save(self, commit=True):
         user = self.instance.user
         user.username = self.cleaned_data['username']
-        user.email = self.cleaned_data['email']  
+        user.email = self.cleaned_data['email']  # Actualiza el campo email en el modelo User
         if commit:
-            user.save()  
+            user.save()  # Guarda los cambios en el modelo User
         return super(EditarPerfilForm, self).save(commit)
     
 # Cambiar contraseña    

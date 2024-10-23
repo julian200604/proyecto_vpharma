@@ -6,48 +6,63 @@
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
 
-
   body {
     margin: 0;
     padding: 0;
     font-family: 'Poppins', sans-serif;
   }
 
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
+  h1, h2, h3, h4, h5, h6 {
     font-family: 'Poppins', sans-serif;
   }
+
   .form-control {
     color: #ccc;
     font-weight: 600;
+  }
+
+  .card {
+    margin-bottom: 20px;
+  }
+
+  /* Media Queries for Responsiveness */
+  @media (max-width: 768px) {
+    .card-body {
+      text-align: center;
+    }
+    
+    svg {
+      margin: 0 auto;
+      display: block;
+    }
+
+    p {
+      margin-top: 10px;
+    }
+
+    .card {
+      width: 100% !important;
+    }
   }
 </style>
 
 <div class="container">
   <div class="row justify-content-center mt-5 mb-5">
 
-    <div class="col">
-      <div class="card" style="width: 18rem;">
+    <div class="col-lg-4 col-md-6 col-sm-12">
+      <div class="card w-100">
         <div class="card-body rounded" style="background-color: #9394D5;">
           <div class="d-flex align-items-center mb-4">
-            <svg xmlns="http://www.w3.org/2000/svg" width="60" fill="aliceblue" class="bi bi-person-fill"
-              viewBox="0 0 16 16">
+            <svg xmlns="http://www.w3.org/2000/svg" width="60" fill="aliceblue" class="bi bi-person-fill" viewBox="0 0 16 16">
               <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
             </svg>
             <p style="color: aliceblue; margin-top: 50px;">Hola, {{ user.username }}!</p>
           </div>
           <a href="{% url 'orders:order_history' %}" class="card-link fw-semibold" style="color: aliceblue;">Historial de compra</a>
           <div class="d-flex align-items-center mt-5">
-            <svg xmlns="http://www.w3.org/2000/svg" width="40" fill="aliceblue" class="bi bi-box-arrow-in-right"
-              viewBox="0 0 16 16">
-              <path fill-rule="evenodd"
-                d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0z" />
-              <path fill-rule="evenodd"
-                d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z" />
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" fill="aliceblue" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
+              <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0z" />
+              <path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z" />
             </svg>
             <a href="{% url 'logout' %}" style="color: aliceblue; text-decoration: none;" class="ms-1">Cerrar sesión</a>
           </div>
@@ -55,75 +70,75 @@
       </div>
     </div>
 
-    <div class="col">
-      <div class="card" style="width: 50rem; border: none;">
+    <div class="col-lg-8 col-md-6 col-sm-12">
+      <div class="card w-100" style="border: none;">
         <div class="card-body rounded" style="background-color: #E7F1F6;">
           <h5 class="card-title fw-bold mb-4" style="color: #4E50B4;">Mi perfil</h5>
           <form method="post">
             {% csrf_token %}
             
             <div class="form-group mb-4">
-                <label for="username" class="fw-semibold" style="color: #4E50B4;">Nombre de Usuario</label>
-                {{ form.username|add_class:"form-control form-control-lg" }}
-                {% if form.username.errors %}
-                    <div class="text-danger">
-                        {{ form.username.errors }}
-                    </div>
-                {% endif %}
+              <label for="username" class="fw-semibold" style="color: #4E50B4;">Nombre de Usuario</label>
+              {{ form.username|add_class:"form-control form-control-lg" }}
+              {% if form.username.errors %}
+              <div class="text-danger">
+                {{ form.username.errors }}
+              </div>
+              {% endif %}
             </div>
-            
+
             <div class="form-group mb-4">
-                <label for="email" class="fw-semibold" style="color: #4E50B4;">Correo electrónico</label>
-                {{ form.email|add_class:"form-control form-control-lg" }}
-                {% if form.email.errors %}
-                    <div class="text-danger">
-                        {{ form.email.errors }}
-                    </div>
-                {% endif %}
+              <label for="email" class="fw-semibold" style="color: #4E50B4;">Correo electrónico</label>
+              {{ form.email|add_class:"form-control form-control-lg" }}
+              {% if form.email.errors %}
+              <div class="text-danger">
+                {{ form.email.errors }}
+              </div>
+              {% endif %}
             </div>
-        
+
             <div class="form-group mb-4">
-                <label for="nombre_completo" class="fw-semibold" style="color: #4E50B4;">Nombre Completo</label>
-                {{ form.nombre_completo|add_class:"form-control form-control-lg" }}
-                {% if form.nombre_completo.errors %}
-                    <div class="text-danger">
-                        {{ form.nombre_completo.errors }}
-                    </div>
-                {% endif %}
+              <label for="nombre_completo" class="fw-semibold" style="color: #4E50B4;">Nombre Completo</label>
+              {{ form.nombre_completo|add_class:"form-control form-control-lg" }}
+              {% if form.nombre_completo.errors %}
+              <div class="text-danger">
+                {{ form.nombre_completo.errors }}
+              </div>
+              {% endif %}
             </div>
-        
+
             <div class="form-group mb-4">
-                <label for="telefono" class="fw-semibold" style="color: #4E50B4;">Teléfono</label>
-                {{ form.telefono|add_class:"form-control form-control-lg" }}
-                {% if form.telefono.errors %}
-                    <div class="text-danger">
-                        {{ form.telefono.errors }}
-                    </div>
-                {% endif %}
+              <label for="telefono" class="fw-semibold" style="color: #4E50B4;">Teléfono</label>
+              {{ form.telefono|add_class:"form-control form-control-lg" }}
+              {% if form.telefono.errors %}
+              <div class="text-danger">
+                {{ form.telefono.errors }}
+              </div>
+              {% endif %}
             </div>
-        
+
             <div class="form-group mb-4">
-                <label for="fecha_nacimiento" class="fw-semibold" style="color: #4E50B4;">Fecha de Nacimiento</label>
-                {{ form.fecha_nacimiento|add_class:"form-control form-control-lg" }}
-                {% if form.fecha_nacimiento.errors %}
-                    <div class="text-danger">
-                        {{ form.fecha_nacimiento.errors }}
-                    </div>
-                {% endif %}
+              <label for="fecha_nacimiento" class="fw-semibold" style="color: #4E50B4;">Fecha de Nacimiento</label>
+              {{ form.fecha_nacimiento|add_class:"form-control form-control-lg" }}
+              {% if form.fecha_nacimiento.errors %}
+              <div class="text-danger">
+                {{ form.fecha_nacimiento.errors }}
+              </div>
+              {% endif %}
             </div>
-        
+
             <div class="form-group mb-4">
-                <label for="direccion" class="fw-semibold" style="color: #4E50B4;">Dirección</label>
-                {{ form.direccion|add_class:"form-control form-control-lg" }}
-                {% if form.direccion.errors %}
-                    <div class="text-danger">
-                        {{ form.direccion.errors }}
-                    </div>
-                {% endif %}
+              <label for="direccion" class="fw-semibold" style="color: #4E50B4;">Dirección</label>
+              {{ form.direccion|add_class:"form-control form-control-lg" }}
+              {% if form.direccion.errors %}
+              <div class="text-danger">
+                {{ form.direccion.errors }}
+              </div>
+              {% endif %}
             </div>
-      
+
             <div class="text-center">
-                <button type="submit" class="btn rounded" style="color: #E7F1F6; background-color: #4E50B4;">Guardar Cambios</button>
+              <button type="submit" class="btn rounded" style="color: #E7F1F6; background-color: #4E50B4;">Guardar Cambios</button>
             </div>
           </form>
         </div>
