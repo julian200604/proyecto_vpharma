@@ -1,53 +1,125 @@
 {% extends "admin/base_site.html" %}
+{% load static %}
+
+{% block title %}Informe de Ventas{% endblock %}
 
 {% block content %}
-<div class="container mt-5">
-    <h2 class="text-center mb-4" style="color: #4A4A4A; font-weight: bold;">Informe de Ventas</h2>
+  <style>
+      .sales-report-container {
+          max-width: 800px;
+          margin: 20px auto;
+          padding: 20px;
+          border: 1px solid #dee2e6;
+          border-radius: 8px;
+          background-color: #f8f9fa;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
 
-    <!-- Formulario de filtro por fechas -->
-    <div class="card p-4 shadow-sm mb-4">
-        <h5 class="card-title mb-3" style="color: #3730A3;"><strong>Filtrar por Fechas</strong></h5>
-        <form method="get" class="row g-3 align-items-center">
-            <div class="col-md-5">
-                {{ form.as_p }}
-            </div>
-            <div class="col-md-2">
-                <button type="submit" class="btn btn-primary w-100" style="background-color: #3730A3; border: none;">
-                    <i class="fas fa-file-pdf"></i> Generar Informe en PDF
-                </button>
-            </div>
-        </form>
-    </div>
+      .sales-report-container h1 {
+          font-size: 24px;
+          margin-bottom: 20px;
+          color: #343a40;
+          text-align: center;
+      }
 
+      .sales-report-container h2 {
+          font-size: 20px;
+          margin-top: 20px;
+          color: #495057;
+      }
 
-    <!-- Tabla de detalles del informe -->
-    {% if orders %}
-    <div class="table-responsive mt-4">
-        <table class="table table-bordered table-hover shadow-sm">
-            <thead class="table-dark">
-                <tr class="text-center">
-                    <th>Fecha</th>
-                    <th>Número de Orden</th>
-                    <th>Cliente</th>
-                    <th>Total de Venta</th>
-                    <th>Estado</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for order in orders %}
-                <tr>
-                    <td>{{ order.date|date:"d/m/Y" }}</td>
-                    <td>{{ order.order_number }}</td>
-                    <td>{{ order.customer_name }}</td>
-                    <td>${{ order.total_amount }}</td>
-                    <td>{{ order.status }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
+      .sales-report-container h3 {
+          font-size: 18px;
+          margin-top: 15px;
+          color: #6c757d;
+      }
+
+      .sales-report-container .btn {
+          font-size: 16px;
+          padding: 10px;
+      }
+
+      .sales-report-container .table {
+          margin-top: 20px;
+          border-collapse: collapse;
+          width: 100%;
+      }
+
+      .sales-report-container .table th,
+      .sales-report-container .table td {
+          text-align: left;
+          padding: 12px;
+          border-bottom: 1px solid #dee2e6;
+      }
+
+      .sales-report-container .table th {
+          background-color: #007bff;
+          color: white;
+      }
+
+      .sales-report-container .table-striped tbody tr:nth-of-type(odd) {
+          background-color: #f2f2f2;
+      }
+
+      .sales-report-container .result-summary {
+          margin-top: 20px;
+          font-weight: bold;
+          color: #343a40;
+      }
+
+      .sales-report-container hr {
+          border-top: 2px solid #007bff;
+          margin: 20px 0;
+      }
+  </style>
+
+  <div class="sales-report-container">
+    <h1>Generar Informe de Ventas</h1>
+    <form method="get" class="row g-3 align-items-center" action="">
+      <div class="col-md-5">
+        {{ form.as_p }}
+      </div>
+      <div class="col-md-2">
+        <button type="submit" name="generate_pdf" class="btn btn-primary w-100">
+          <i class="fas fa-file-pdf"></i> Generar Informe en PDF
+        </button>
+      </div>
+      <div class="col-md-2">
+        <button type="submit" name="generate_csv" class="btn btn-secondary w-100" style="background-color: #3730A3; border: none;">
+          <i class="fas fa-file-csv"></i> Generar Informe en CSV
+        </button>
+      </div>
+    </form>
+
+    {% if report_data %}
+      <hr>
+      <div class="result-summary">
+        <h2>Resultados del Informe</h2>
+        <p>Total de ventas: {{ total_sales }}</p>
+        <p>Total de órdenes: {{ total_orders }}</p>
+        <p>Venta promedio por pedido: {{ avg_sales_per_order }}</p>
+      </div>
+
+      <h3>Ventas por Producto</h3>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Producto</th>
+            <th>Cantidad Vendida</th>
+            <th>Total Vendido</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in product_sales %}
+            <tr>
+              <td>{{ item.product__name }}</td>
+              <td>{{ item.total_quantity }}</td>
+              <td>{{ item.total_sales }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
     {% endif %}
-</div>
-
-
+  </div>
 {% endblock %}
+

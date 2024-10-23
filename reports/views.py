@@ -1,4 +1,5 @@
 import io
+import csv
 from django.shortcuts import render
 from django.http import FileResponse, HttpResponse
 from reportlab.lib.pagesizes import A4
@@ -123,8 +124,42 @@ def sales_report_pdf(request):
     ]))
     elements.append(product_table)
 
-    # Construcción del documento PDF
+    # Build the PDF
     doc.build(elements)
     buffer.seek(0)
-
     return FileResponse(buffer, as_attachment=True, filename=f"sales_report_{start_date.date()}_to_{end_date.date()}.pdf")
+
+
+def sales_report_csv(request):
+    # Inicializamos el formulario
+    form = SalesReportForm(request.GET or None)
+    orders = []
+    start_date = None
+    end_date = None
+
+    if form.is_valid():
+        start_date = form.cleaned_data['start_date']
+        end_date = form.cleaned_data['end_date']
+        
+        start_date = make_aware(datetime.combine(start_date, datetime.min.time()))
+        end_date = make_aware(datetime.combine(end_date, datetime.max.time()))
+        orders = Order.objects.filter(created__range=[start_date, end_date])
+
+    if not orders:
+        return HttpResponse("No se encontraron pedidos para las fechas seleccionadas.", content_type='text/plain')
+
+    # Preparar respuesta CSV
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = f'attachment; filename="sales_report_{start_date.date()}_to_{end_date.date()}.csv"'
+
+    writer = csv.writer(response)
+    
+    # Escribir encabezados en el archivo CSV
+    writer.writerow(['Fecha', 'Número de Orden', 'Cliente', 'Total de Venta', 'Estado'])
+    
+    # Escribir las filas de datos de las órdenes
+    for order in orders:
+        customer_name = f"{order.first_name} {order.last_name}"  # Concatenar first_name y last_name
+        writer.writerow([order.created.date(), order.id, customer_name, f"${order.get_total_cost():.2f}", order.get_status_display()])
+    
+    return response

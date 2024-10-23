@@ -5,7 +5,7 @@ from django.utils.html import format_html
 from django.http import HttpResponse
 from .models import SalesReport
 from .forms import SalesReportForm
-from .views import sales_report_pdf
+from .views import sales_report_pdf, sales_report_csv
 
 @admin.register(SalesReport)
 class SalesReportAdmin(admin.ModelAdmin):
@@ -17,9 +17,13 @@ class SalesReportAdmin(admin.ModelAdmin):
         form = SalesReportForm(request.GET or None)
         extra_context = extra_context or {}
         extra_context['form'] = form
-        
+
         if form.is_valid():
-            return sales_report_pdf(request)  # Genera el PDF cuando el formulario es válido
+            # Redirige a la vista correspondiente según el formato seleccionado
+            if 'generate_pdf' in request.GET:
+                return sales_report_pdf(request)
+            elif 'generate_csv' in request.GET:
+                return sales_report_csv(request)
 
         return super().changelist_view(request, extra_context=extra_context)
 
@@ -40,7 +44,7 @@ class SalesReportAdmin(admin.ModelAdmin):
         report = SalesReport.objects.get(pk=pk)
         response = HttpResponse(content_type='application/pdf')
         response['Content-Disposition'] = f'attachment; filename="sales_report_{pk}.pdf"'
-        
+
         sales_report_pdf(report, response)
-        
+
         return response
