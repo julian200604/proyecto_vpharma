@@ -12,7 +12,7 @@ SECRET_KEY = 'django-insecure-k6!#q&!j%-om)i^-0p!%-#2k3_kjtg*@p#lx3@xu@&0i474+x5
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['www.v-pharma.online', 'v-pharma.online','18.234.251.16', 'localhost']
 #'www.v-pharma.online', 'v-pharma.online','18.234.251.16', 'localhost'
 
 
