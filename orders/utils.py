@@ -64,9 +64,7 @@ def create_invoice_pdf(order_id):
     content.append(Paragraph(f'Factura #{order.id}', title_style))
     content.append(Paragraph(f'Fecha: {order.created.strftime("%Y-%m-%d")}', normal_style))
     content.append(Paragraph(f'Nombre: {order.first_name} {order.last_name}', normal_style))
-    content.append(Paragraph(f'Correo: {order.email}', normal_style))
     content.append(Paragraph(f'Dirección: {order.address}', normal_style))
-    content.append(Paragraph(f'Ciudad: {order.city}', normal_style))
     
     # Espacio adicional
     content.append(Spacer(1, 12))
@@ -96,7 +94,7 @@ def create_invoice_pdf(order_id):
     pdf_content = buffer.getvalue()
     buffer.close()
 
-    # Crear una respuzzesta HTTP para el archivo PDF
+    # Crear una respuesta HTTP para el archivo PDF
     response = HttpResponse(pdf_content, content_type='application/pdf')
     response['Content-Disposition'] = f'attachment; filename="invoice_{order_id}.pdf"'
     

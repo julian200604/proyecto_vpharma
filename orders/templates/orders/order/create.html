@@ -1,36 +1,97 @@
-{% extends "shop/base.html" %}
-
+{% extends "orders/base_create.html" %}
+{% load widget_tweaks %}
 {% block title %}
-  Checkout
+  v-pharma.online
 {% endblock %}
 
 {% block content %}
+<div class="d-flex justify-content-center align-items-center min-vh-100">
+  <div class="card mb-3" style="max-width: 36rem; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+    <div class="card-body">
+      <form method="post" class="order-form">
+        {% csrf_token %}
+        <h2 style="font-weight: semibold; color: #4E50B4;">¿Quién recibe?</h2>
+        <div class="row mb-5">
+          <div class="col">
+            <div class="form-group">
+              <label style="color: #4E50B4;">{{ form.first_name.label }}</label>
+              {{ form.first_name|add_class:"form-control" }}
+            </div>
+          </div>
+          <div class="col">
+            <div class="form-group">
+              <label style="color: #4E50B4;">{{ form.last_name.label }}</label>
+              {{ form.last_name|add_class:"form-control" }}
+            </div>
+          </div>
+        </div>
 
-<div class="container">
-  <div class="row ">
-      <div class="col-md-10 align-items-center">
-      <h1 class="" style="color: #a9a9dd;"><strong>Verificar</strong></h1><br>
-        <form method="post" class="order-form">
-          {{ form.as_p }}
-          <p><input type="submit" value="Place order" style="background-color: #a9a9dd;;"></p>
-          {% csrf_token %}
-        </form>
-    </div>
-    <div class="col-md-2 order-info ">
-      <h3>Tu Pedido</h3>
-      <ul>
-        {% for item in cart %}
-          <li>
-            {{ item.quantity }}x {{ item.product.name }}
-            <span>${{ item.total_price }}</span>
-          </li>
-        {% endfor %}
-      </ul>
-      <p>Total: ${{ cart.get_total_price }}</p>
+        <h2 style="font-weight: semibold; color: #4E50B4;">¿Dónde lo recibe?</h2>
+        <div class="form-group">
+          <label style="color: #4E50B4;">{{ form.address.label }}</label>
+          {{ form.address|add_class:"form-control" }}
+        </div>
+        <div class="form-group">
+          <label style="color: #4E50B4;">{{ form.neighborhood.label }}</label>
+          {{ form.neighborhood|add_class:"form-control" }}
+        </div>
+        <div class="form-group">
+          <label style="color: #4E50B4;">{{ form.phone_number.label }}</label>
+          {{ form.phone_number|add_class:"form-control" }}
+        </div>
+        <div class="form-group mb-5">
+          <label style="color: #4E50B4;">{{ form.instructions.label }}</label>
+          {{ form.instructions|add_class:"form-control" }}
+        </div>
+
+        <h2 style="font-weight: semibold; color: #4E50B4;">Forma de pago</h2>
+        <div class="form-group" style="color: #4E50B4;">
+          {{ form.payment_method }}
+        </div>
+
+        <div class="row text-center">
+          <div class="col">
+            <a class="btn fw-bold rounded-pill" href="{% url 'cart:cart_detail' %}" role="button" style="background-color: #34DD78; color: #4E50B4;">Cancelar</a>
+          </div>
+          <div class="col">
+            <input type="submit" value="Aceptar" style="background-color: #34DD78; color: #4E50B4;" class="btn rounded-pill fw-bold">
+          </div>
+        </div>
+      </form>
     </div>
   </div>
 </div>
-  
- 
-  
+
+<!-- Modal para mostrar errores -->
+<div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="errorModalLabel" style="color: red;">Error en el formulario</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p style="color: red; font-weight: bold;">Completar formulario</p>
+        <ul>
+          {% for field, errors in form.errors.items %}
+            <li><strong>{{ field }}:</strong> {{ errors|join:", " }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% if form.errors %}
+<script>
+  $(document).ready(function() {
+    $('#errorModal').modal('show');
+  });
+</script>
+{% endif %}
 {% endblock %}

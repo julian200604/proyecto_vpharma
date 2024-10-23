@@ -12,24 +12,25 @@ class PublishedManager(models.Manager):
 
 class Post(models.Model):
     class Status(models.TextChoices):
-        DRAFT = 'DF', 'Draft'
-        PUBLISHED = 'PB', 'Published'
+        DRAFT = 'DF', 'Borrador'
+        PUBLISHED = 'PB', 'Publicado'
 
-    title = models.CharField(max_length=250)
-    slug = models.SlugField(max_length=250)
+    title = models.CharField(max_length=250, verbose_name="Título")
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
-        related_name='blog_posts'
+        related_name='blog_posts',
+        verbose_name="Autor"
     )
-    body = models.TextField()
-    publish = models.DateTimeField(default=timezone.now)
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
+    body = models.TextField(verbose_name="Contenido")
+    publish = models.DateTimeField(default=timezone.now, verbose_name="Fecha de Publicación")
+    created = models.DateTimeField(auto_now_add=True, verbose_name="Fecha de Creación")
+    updated = models.DateTimeField(auto_now=True, verbose_name="Fecha de Actualización")
     status = models.CharField(
         max_length=2,
-        choices=Status,
-        default=Status.DRAFT
+        choices=Status.choices,
+        default=Status.DRAFT,
+        verbose_name="Estado"
     )
 
     objects = models.Manager()  # The default manager.
@@ -40,6 +41,8 @@ class Post(models.Model):
         indexes = [
             models.Index(fields=['-publish']),
         ]
+        verbose_name = "Publicación"
+        verbose_name_plural = "Publicaciones"
 
     def __str__(self):
         return self.title

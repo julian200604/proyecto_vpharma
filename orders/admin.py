@@ -11,15 +11,16 @@ class OrderAdmin(admin.ModelAdmin):
         'id',
         'first_name',
         'last_name',
-        'email',
         'address',
-        'city',
+        'neighborhood',
+        'phone_number',
+        'payment_method',
         'is_paid',  
         'status',  # Agregar el estado del pedido aquí
         'created',
-        'paid' 
+        'paid'
     ]
-    list_filter = ['paid', 'created', 'status']  # Agregar filtro por estado
+    list_filter = ['paid', 'created', 'status', 'payment_method']  # Agregar filtro por estado
     inlines = [OrderItemInline]
 
     # Método para mostrar "Sí" o "No" en la columna de "Pagado"
