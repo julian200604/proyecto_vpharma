@@ -2,13 +2,11 @@ from django.conf import settings
 from django.db import models
 from django.utils import timezone
 
-
 class PublishedManager(models.Manager):
     def get_queryset(self):
         return (
             super().get_queryset().filter(status=Post.Status.PUBLISHED)
         )
-
 
 class Post(models.Model):
     class Status(models.TextChoices):
@@ -32,6 +30,7 @@ class Post(models.Model):
         default=Status.DRAFT,
         verbose_name="Estado"
     )
+    image = models.ImageField(upload_to='images/', null=True, blank=True, verbose_name="Imagen")  # Nuevo campo
 
     objects = models.Manager()  # The default manager.
     published = PublishedManager()  # Our custom manager.
